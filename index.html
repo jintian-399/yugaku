@@ -6,38 +6,36 @@
     <title>瑜伽裤百科</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; background: #0a0a12; color: #fff; }
+        body { font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; color: #fff; }
 
         .bg {
             position: fixed; inset: 0; z-index: 0;
             background:
-                linear-gradient(180deg, rgba(10,10,18,0.2) 0%, rgba(10,10,18,0.75) 100%),
-                url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&q=80') center/cover no-repeat;
-            filter: blur(4px);
-            transform: scale(1.05);
+                linear-gradient(180deg, rgba(10,10,18,0.15) 0%, rgba(10,10,18,0.65) 100%),
+                url('https://images.pexels.com/photos/6648616/pexels-photo-6648616.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
         }
 
         .content { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; }
 
-        .badge { display: inline-block; padding: 6px 20px; border-radius: 40px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 3px; margin-bottom: 24px; backdrop-filter: blur(20px); }
+        .badge { display: inline-block; padding: 6px 20px; border-radius: 40px; background: rgba(0,0,0,0.3); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); font-size: 12px; letter-spacing: 3px; margin-bottom: 24px; }
 
-        h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; margin-bottom: 12px; }
-        h1 .gradient { background: linear-gradient(135deg, #e94560, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; margin-bottom: 12px; text-shadow: 0 2px 40px rgba(0,0,0,0.3); }
+        h1 .g { background: linear-gradient(135deg, #e94560, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .sub { font-size: clamp(14px, 1.5vw, 17px); color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 480px; margin: 0 auto 40px; font-weight: 300; }
-        .tagline { font-size: 13px; color: rgba(255,255,255,0.15); letter-spacing: 5px; margin-top: 32px; }
+        .sub { font-size: clamp(14px, 1.5vw, 17px); color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 480px; margin: 0 auto 40px; font-weight: 300; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+        .tl { font-size: 13px; color: rgba(255,255,255,0.2); letter-spacing: 5px; margin-top: 32px; text-shadow: 0 2px 20px rgba(0,0,0,0.2); }
 
         .cards { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
-        .card { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px 24px; text-decoration: none; color: #fff; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
-        .card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .card { background: rgba(0,0,0,0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px 24px; text-decoration: none; color: #fff; transition: all 0.4s; }
+        .card:hover { transform: translateY(-6px); background: rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         .card .icon { font-size: 32px; margin-bottom: 12px; display: block; }
-        .card .num { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 2px; margin-bottom: 6px; }
+        .card .num { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 2px; margin-bottom: 6px; }
         .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
-        .card p { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
-        .card .arrow { display: inline-block; margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.15); transition: all 0.3s; }
+        .card p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+        .card .arrow { display: inline-block; margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.25); transition: all 0.3s; }
         .card:hover .arrow { color: #e94560; transform: translateX(6px); }
 
-        .footer-p { text-align: center; padding: 32px 24px 40px; color: rgba(255,255,255,0.08); font-size: 12px; letter-spacing: 2px; position: relative; z-index: 1; }
+        .fp { text-align: center; padding: 32px 24px 40px; color: rgba(255,255,255,0.1); font-size: 12px; letter-spacing: 2px; position: relative; z-index: 1; }
 
         @media (max-width: 700px) { .cards { grid-template-columns: 1fr; max-width: 380px; } .card { padding: 24px 20px; } }
     </style>
@@ -46,15 +44,15 @@
 <div class="bg"></div>
 <div class="content">
     <div class="badge">始于 2026 · 一个群聊玩笑</div>
-    <h1>瑜伽裤 <span class="gradient">百科</span></h1>
+    <h1>瑜伽裤 <span class="g">百科</span></h1>
     <p class="sub">品牌科普 · 面料科学 · 选购指南 · 群友整活</p>
     <div class="cards">
         <a href="guide.html" class="card"><span class="num">01</span><span class="icon">📖</span><h3>选购介绍</h3><p>品牌 · 面料 · 选购 · 养护</p><span class="arrow">→ 进入</span></a>
         <a href="fun.html" class="card"><span class="num">02</span><span class="icon">😂</span><h3>整活区</h3><p>投票 · 编年史 · 梗图 · 发疯</p><span class="arrow">→ 进入</span></a>
         <a href="quotes.html" class="card"><span class="num">03</span><span class="icon">💬</span><h3>语录区</h3><p>投稿 · 金句 · 讨论留言</p><span class="arrow">→ 进入</span></a>
     </div>
-    <div class="tagline">认真科普 · 大胆整活 · 尊重审美</div>
+    <div class="tl">认真科普 · 大胆整活 · 尊重审美</div>
 </div>
-<div class="footer-p">YUGAKU.ONLINE</div>
+<div class="fp">YUGAKU.ONLINE</div>
 </body>
 </html>
