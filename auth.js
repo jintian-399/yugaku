@@ -74,3 +74,31 @@ async function handleRegister() {
 }
 
 async function logout() { if (supabase) await supabase.auth.signOut(); currentUser = null; updateUI() }
+
+// ===== 📊 页面访问统计 =====
+async function trackPageView() {
+  try {
+    const visit = {
+      page: window.location.pathname,
+      title: document.title,
+      referrer: document.referrer || '(直接访问)',
+      screen: `${window.innerWidth}x${window.innerHeight}`,
+      visited_at: new Date().toISOString()
+    }
+    // localStorage 备份（本地也能看）
+    const history = JSON.parse(localStorage.getItem('yugaku_visits') || '[]')
+    history.push(visit)
+    localStorage.setItem('yugaku_visits', JSON.stringify(history.slice(-1000)))
+    // 尝试发送到 Supabase（表格不存在也不会报错）
+    if (supabase) {
+      await supabase.from('page_views').insert([visit])
+    }
+  } catch (e) { /* 静默失败，不影响页面 */ }
+}
+
+// 页面加载后自动记录访问
+if (document.readyState === 'complete') {
+  trackPageView()
+} else {
+  window.addEventListener('load', trackPageView)
+}

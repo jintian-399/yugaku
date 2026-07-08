@@ -37,12 +37,90 @@
         .card .arrow { display: inline-block; margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.25); transition: all 0.3s; }
         .card:hover .arrow { color: #e94560; transform: translateX(6px); }
 
+        /* ===== 发疯院 · 巨显眼全幅横幅 ===== */
+        .crazy-banner {
+            display: flex; align-items: center; gap: 20px;
+            max-width: 900px; width: 100%; margin: 18px auto 0;
+            padding: 20px 28px;
+            background: linear-gradient(135deg, rgba(233,69,96,0.2), rgba(245,166,35,0.12));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(233,69,96,0.3);
+            border-radius: 20px;
+            text-decoration: none; color: #fff;
+            position: relative; overflow: hidden;
+            transition: all 0.4s;
+            animation: cb-pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes cb-pulse {
+            0%, 100% { border-color: rgba(233,69,96,0.3); box-shadow: 0 0 20px rgba(233,69,96,0.05); }
+            50% { border-color: rgba(245,166,35,0.5); box-shadow: 0 0 40px rgba(233,69,96,0.15); }
+        }
+        .crazy-banner::before {
+            content: '🤪🤪🤪🤪🤪🤪🤪🤪🤪🤪';
+            position: absolute; top: -8px; left: 0; right: 0;
+            font-size: 14px; opacity: 0.06; white-space: nowrap;
+            pointer-events: none;
+        }
+        .crazy-banner:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: var(--pink, #e94560);
+            background: linear-gradient(135deg, rgba(233,69,96,0.3), rgba(245,166,35,0.2));
+            box-shadow: 0 20px 60px rgba(233,69,96,0.2);
+        }
+
+        .crazy-banner .cb-icon {
+            font-size: 42px; flex-shrink: 0;
+            animation: cb-bounce 1.2s ease-in-out infinite;
+        }
+        @keyframes cb-bounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .crazy-banner .cb-text { flex: 1; text-align: left; }
+        .crazy-banner .cb-title {
+            font-size: 22px; font-weight: 800;
+            background: linear-gradient(135deg, #e94560, #f5a623);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .crazy-banner .cb-sub {
+            display: block; font-size: 13px; color: rgba(255,255,255,0.5);
+            margin-top: 2px; font-weight: 400;
+        }
+
+        .crazy-banner .cb-arrow {
+            font-size: 14px; font-weight: 700;
+            color: #f5a623; white-space: nowrap;
+            transition: transform 0.3s;
+        }
+        .crazy-banner:hover .cb-arrow { transform: translateX(6px); }
+
+        .crazy-banner .cb-hot {
+            position: absolute; top: -8px; right: -6px;
+            padding: 3px 12px;
+            background: linear-gradient(135deg, #e94560, #f5a623);
+            border-radius: 20px;
+            font-size: 11px; font-weight: 800; color: #fff;
+            letter-spacing: 1px;
+            animation: cb-hot-pulse 1s ease-in-out infinite;
+        }
+        @keyframes cb-hot-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
         .fp { text-align: center; padding: 32px 24px 40px; color: rgba(255,255,255,0.1); font-size: 12px; letter-spacing: 2px; position: relative; z-index: 1; }
 
-        @media (max-width: 700px) { .cards { grid-template-columns: 1fr; max-width: 380px; } .card { padding: 24px 20px; } }
+        @media (max-width: 700px) {
+            .cards { grid-template-columns: 1fr; max-width: 380px; }
+            .card { padding: 24px 20px; }
+            .crazy-banner { flex-wrap: wrap; gap: 12px; padding: 18px 20px; }
+            .crazy-banner .cb-icon { font-size: 32px; }
+            .crazy-banner .cb-title { font-size: 18px; }
+            .crazy-banner .cb-sub { font-size: 12px; }
+        }
     </style>
-<script src="auth.js"></script>
-<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <!-- 登录弹窗 -->
@@ -81,6 +159,18 @@
         <a href="forum.html" class="card"><span class="num">03</span><span class="icon">💬</span><h3>论坛</h3><p>分话题讨论 · 发帖交流</p><span class="arrow">→ 进入</span></a>
         <a href="quotes.html" class="card"><span class="num">04</span><span class="icon">💬</span><h3>语录区</h3><p>投稿 · 金句 · 讨论留言</p><span class="arrow">→ 进入</span></a>
     </div>
+
+    <!-- ===== 发疯院 · 全幅巨显眼入口 ===== -->
+    <a href="crazy.html" class="crazy-banner">
+        <span class="cb-icon">🤪</span>
+        <span class="cb-text">
+            <span class="cb-title">发疯院</span>
+            <span class="cb-sub">本区没有规则 · 匿名发疯 · 所有人的疯言疯语都在这里</span>
+        </span>
+        <span class="cb-arrow">→ 进去发疯</span>
+        <span class="cb-hot">HOT</span>
+    </a>
+
     <div class="tl">认真科普 · 大胆整活 · 尊重审美</div>
 </div>
 <div class="fp">YUGAKU.ONLINE</div>

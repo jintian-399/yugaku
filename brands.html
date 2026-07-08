@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>品牌库 — 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧘‍♀️ 瑜伽裤百科</a>
+            <span class="subtitle">· 品牌库</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html" class="active">品牌库</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">💬 语录</a>
+            <a href="forum.html">💭 讨论区</a>
+            <a href="crazy.html">🤪 发疯院</a>
+            <a href="fun.html">🏆 整活区</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>📚 品牌百科</h1>
+        <p>从面料黑科技到品牌故事，深度解析五大瑜伽裤品牌</p>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- ===== 品牌目录侧栏 + 内容 ===== -->
+    <div class="content-layout">
+
+        <!-- 侧栏导航 -->
+        <aside class="sidebar">
+            <h4>品牌列表</h4>
+            <a href="#lululemon">Lululemon</a>
+            <a href="#alo">Alo Yoga</a>
+            <a href="#lornajane">Lorna Jane</a>
+            <a href="#maia">MAIA ACTIVE</a>
+            <a href="#baoluo">暴走的萝莉</a>
+            <a href="#compare">⚡ 五大品牌对比</a>
+        </aside>
+
+        <!-- 主要内容区 -->
+        <div class="main-content">
+
+            <!-- ===== Lululemon ===== -->
+            <div class="brand-detail" id="lululemon">
+                <h2>🧘 Lululemon</h2>
+                <div class="brand-sub">🇨🇦 加拿大 · 温哥华 · 创立 1998 年 · 创始人 Chip Wilson</div>
+                <p class="brand-desc">
+                    Lululemon 是瑜伽裤行业当之无愧的"开山鼻祖"。1998 年从温哥华的一家小店起步，
+                    创始人 Chip Wilson 发现市面上缺少专为瑜伽设计的功能性服装，于是亲自开发了
+                    Luon 面料——从此改变了全球女性的运动穿着方式。
+                </p>
+
+                <h4 style="margin: 16px 0 8px;">核心面料技术</h4>
+                <table>
+                    <tr><th>面料名</th><th>特点</th><th>代表产品</th><th>适合场景</th></tr>
+                    <tr><td><strong>Nulu</strong></td><td>极致柔软，如奶油般丝滑触感，裸感体验</td><td>Align™ 系列</td><td>瑜伽、日常</td></tr>
+                    <tr><td><strong>Everlux</strong></td><td>速干凉爽，双侧结构，内层排汗外层顺滑</td><td>Wunder Train™ 系列</td><td>高强度训练</td></tr>
+                    <tr><td><strong>Luon</strong></td><td>经典面料，棉感触感，中度支撑</td><td>Wunder Under™ 系列</td><td>瑜伽、综合</td></tr>
+                    <tr><td><strong>Luxtreme</strong></td><td>高压缩，塑形效果强，哑光质感</td><td>Fast & Free™ 系列</td><td>跑步、高强度</td></tr>
+                    <tr><td><strong>Nulu Mesh</strong></td><td>透气网眼拼接，Nulu基底</td><td>Align 拼接款</td><td>热瑜伽、夏季</td></tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>💡 选购建议：</strong>
+                    Align（Nulu）是入门必选——体验"裸感"的定义。但注意 Nulu 比较娇嫩，
+                    起球概率高，不适合高强度训练。撸铁跑步选 Wunder Train（Everlux）更耐用。
+                </div>
+
+                <h4 style="margin: 16px 0 8px;">尺码体系</h4>
+                <p>Lululemon 采用数字码（0/2/4/6/8/10/12/14），相当于 XXS~XL。<br>
+                腰围 66cm 约对应 4 码，70cm 约 6 码。建议到店试穿，因为不同面料同码数体感差异明显。<br>
+                <strong>一个冷知识：</strong>Lululemon 提供免费改裤长服务，买了长裤可以去店里裁短。</p>
+
+                <h4 style="margin: 16px 0 8px;">价格区间</h4>
+                <p>💰 ¥750 ~ ¥1,500（中国内地门店）<br>
+                海淘或奥莱可低至 ¥400~600，但要注意真假。</p>
+            </div>
+
+            <!-- ===== Alo Yoga ===== -->
+            <div class="brand-detail" id="alo">
+                <h2>🏔️ Alo Yoga</h2>
+                <div class="brand-sub">🇺🇸 美国 · 洛杉矶 · 创立 2007 年</div>
+                <p class="brand-desc">
+                    Alo Yoga 是"把瑜伽裤穿出街"的典范。品牌全称是"Air Land Ocean"，
+                    设计风格偏向时尚穿搭，是 Kendall Jenner、Hailey Bieber 等
+                    好莱坞明星的出街首选。如果说 Lululemon 是运动装备，Alo 更像是"运动时装"。
+                </p>
+
+                <h4 style="margin: 16px 0 8px;">核心面料技术</h4>
+                <table>
+                    <tr><th>面料名</th><th>特点</th><th>适合场景</th></tr>
+                    <tr><td><strong>Airbrush</strong></td><td>哑光高腰，臀部提拉效果显著，"翘臀神器"</td><td>瑜伽、穿搭</td></tr>
+                    <tr><td><strong>Accolade</strong></td><td>棉质绒面，柔软宽松，休闲感强</td><td>日常通勤、居家</td></tr>
+                    <tr><td><strong>High-Waist</strong></td><td>超高腰设计，收腹显腿长</td><td>瑜伽、健身</td></tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>💡 Max 有话说：</strong>
+                    Alo 的 Airbrush 面料对臀部线条的修饰效果确实好，如果你追求"穿搭好看"多于
+                    "运动性能"，Alo 值得入。但同价位下，面料耐用度不及 Lululemon。
+                </div>
+
+                <h4 style="margin: 16px 0 8px;">价格区间</h4>
+                <p>💰 ¥600 ~ ¥1,200（官网/海淘），国内暂无正式门店，需海淘或代购。</p>
+            </div>
+
+            <!-- ===== Lorna Jane ===== -->
+            <div class="brand-detail" id="lornajane">
+                <h2>🇦🇺 Lorna Jane</h2>
+                <div class="brand-sub">澳大利亚 · 布里斯班 · 创立 2001 年 · 创始人 Lorna Jane Clarkson</div>
+                <p class="brand-desc">
+                    来自澳洲的"运动功能派"。创始人 Lorna Jane 本身就是健身教练和瑜伽老师，
+                    品牌理念是"运动功能性优先，时尚第二"。面料厚实、支撑性强、压缩感明显，
+                    是真正为高强度训练设计的。和 Lululemon 走的是完全不同的路线——一个柔，一个刚。
+                </p>
+
+                <h4 style="margin: 16px 0 8px;">核心特点</h4>
+                <ul style="margin-left: 20px; line-height: 2; color: #555;">
+                    <li>🧱 <strong>面料厚实</strong> — 比 Lululemon 的 Nulu 厚 2~3 倍，完全不透</li>
+                    <li>💪 <strong>压缩感强</strong> — 包裹感明显，运动时肌肉不乱颤</li>
+                    <li>🏋️ <strong>适合高强度</strong> — HIIT、撸铁、跑步的最佳选择</li>
+                    <li>🧼 <strong>超级耐洗</strong> — 不容易起球，洗 100 次和新的一样</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>💡 推荐人群：</strong>
+                    如果你是"认真训练派"——每周撸铁/CrossFit 4 次以上，Lorna Jane 比 Lululemon 更耐操。
+                    缺点是款式偏运动风，不够日常通勤；厚面料夏天会热。
+                </div>
+
+                <h4 style="margin: 16px 0 8px;">价格区间</h4>
+                <p>💰 ¥500 ~ ¥900（海淘），天猫旗舰店偶尔有活动，折扣力度不错。</p>
+            </div>
+
+            <!-- ===== MAIA ACTIVE ===== -->
+            <div class="brand-detail" id="maia">
+                <h2>🌸 MAIA ACTIVE（玛伊娅）</h2>
+                <div class="brand-sub">🇨🇳 中国 · 上海 · 创立 2016 年</div>
+                <p class="brand-desc">
+                    MAIA ACTIVE 是近年来国内最火的运动女装品牌之一。创始人王佳音曾是维密买手，
+                    团队自称"专为亚洲女性设计"。最核心的洞察是——亚洲女性和欧美女性在腰臀比例上
+                    差异明显，照搬西方版型不合适。MAIA 在版型上做了针对性优化。
+                </p>
+
+                <h4 style="margin: 16px 0 8px;">核心面料技术</h4>
+                <table>
+                    <tr><th>面料名</th><th>特点</th><th>代表产品</th></tr>
+                    <tr><td><strong>MOLY</strong></td><td>云感面料，比 Nulu 更糯更软，轻微起毛球</td><td>云感裤</td></tr>
+                    <tr><td><strong>BODY</strong></td><td>高支撑哑光面料，塑形效果强</td><td>腰精裤</td></tr>
+                    <tr><td><strong>WONDER</strong></td><td>速干凉爽，适合夏季和热汗运动</td><td>零感裤</td></tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>💡 亮点：</strong>
+                    版型真的更适合亚洲女生——腰臀比调整过，不容易出现"腰松屁股紧"的尴尬。
+                    价格比 Lululemon 亲民很多，云感裤常年 ¥300~500。
+                    <strong>槽点：</strong>云感面料起球问题被吐槽较多。
+                </div>
+
+                <h4 style="margin: 16px 0 8px;">价格区间</h4>
+                <p>💰 ¥200 ~ ¥500（天猫旗舰店），性价比很高，适合学生党和入门用户。</p>
+            </div>
+
+            <!-- ===== 暴走的萝莉 ===== -->
+            <div class="brand-detail" id="baoluo">
+                <h2>👧 暴走的萝莉</h2>
+                <div class="brand-sub">🇨🇳 中国 · 创立 2014 年 · 创始人 陈暖央</div>
+                <p class="brand-desc">
+                    淘宝起家的国产运动女装品牌，创始人陈暖央本身就是健身网红（微博粉丝 400 万+）。
+                    以"平价且好看"为卖点，设计风格偏甜美少女系，价格亲民到夸张。
+                    如果你预算有限，但想买好看的瑜伽裤，暴走的萝莉是首选。
+                </p>
+
+                <h4 style="margin: 16px 0 8px;">核心特点</h4>
+                <ul style="margin-left: 20px; line-height: 2; color: #555;">
+                    <li>💸 <strong>价格真香</strong> — 大部分 ¥69~¥199，一杯奶茶钱？不，好几杯</li>
+                    <li>🎨 <strong>款式超多</strong> — 各种颜色、拼接、印花，一周不重样</li>
+                    <li>📐 <strong>尺码友好</strong> — 有专门的大码/加长款</li>
+                    <li>⚠️ <strong>面料一般</strong> — 和 Lululemon 比差距明显，弹性寿命约半年到一年</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>💡 一句话总结：</strong>
+                    预算有限时的最优解。买来随便穿穿、或者刚入门不知道自己适合什么风格，
+                    先买两条暴走的萝莉试一试，不心疼。但对面料有追求的话，早晚会升级。
+                </div>
+
+                <h4 style="margin: 16px 0 8px;">价格区间</h4>
+                <p>💰 ¥69 ~ ¥199（淘宝/天猫），闭眼入不心疼的水平。</p>
+            </div>
+
+            <!-- ===== 五大品牌对比 ===== -->
+            <div class="brand-detail" id="compare" style="border-left: 4px solid var(--gold);">
+                <h2>⚡ 五大品牌终极对比</h2>
+                <div class="brand-sub">一张表说清楚，怎么选</div>
+
+                <div class="table-wrap">
+                    <table>
+                        <tr>
+                            <th>维度</th>
+                            <th>Lululemon</th>
+                            <th>Alo Yoga</th>
+                            <th>Lorna Jane</th>
+                            <th>MAIA ACTIVE</th>
+                            <th>暴走的萝莉</th>
+                        </tr>
+                        <tr>
+                            <td><strong>价格</strong></td>
+                            <td>¥750~1500</td>
+                            <td>¥600~1200</td>
+                            <td>¥500~900</td>
+                            <td>¥200~500</td>
+                            <td>¥69~199</td>
+                        </tr>
+                        <tr>
+                            <td><strong>面料质感</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>耐穿度</strong></td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>塑形效果</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>适合高强度</strong></td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>日常穿搭</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>性价比</strong></td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>购买难度</strong></td>
+                            <td>⭐（有门店）</td>
+                            <td>⭐⭐⭐⭐（需海淘）</td>
+                            <td>⭐⭐⭐（需海淘）</td>
+                            <td>⭐（天猫直接买）</td>
+                            <td>⭐（淘宝直接买）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>一句话总结</strong></td>
+                            <td>实力标杆</td>
+                            <td>颜值担当</td>
+                            <td>耐操之王</td>
+                            <td>亚洲定制性价比之王</td>
+                            <td>预算救星</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div><!-- /main-content -->
+    </div><!-- /content-layout -->
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>🧘‍♀️ 瑜伽裤百科 · 品牌库 · 持续更新中</p>
+        <div class="disclaimer">
+            ⚠️ 价格和产品信息可能会随时变化。本文基于个人经验和公开资料整理，仅供参考，不构成购买建议。
+        </div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
+(function(){var o=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(e){o.observe(e)})})();
+</script>
+</body>
+</html>

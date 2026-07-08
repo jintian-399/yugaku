@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问统计 — 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <style>
+        .stats-dashboard { max-width: 1000px; margin: 0 auto; padding: 24px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card { background: #fff; border-radius: 16px; padding: 24px; text-align: center; border: 1px solid #eee; }
+        .stat-card .big { font-size: 36px; font-weight: 800; color: var(--pink); }
+        .stat-card .label { font-size: 13px; color: #888; margin-top: 4px; }
+        .stat-card .sub { font-size: 12px; color: #ccc; margin-top: 2px; }
+        .page-list { background: #fff; border-radius: 16px; border: 1px solid #eee; overflow: hidden; }
+        .page-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid #f5f5f5; }
+        .page-row:last-child { border-bottom: none; }
+        .page-row .name { font-weight: 600; color: #333; }
+        .page-row .count { font-size: 18px; font-weight: 700; color: var(--pink); }
+        .page-row .bar-wrap { flex: 1; margin: 0 16px; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+        .page-row .bar-fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--gold)); border-radius: 3px; transition: width 0.5s; }
+        .section-title { font-size: 18px; font-weight: 700; margin: 24px 0 12px; color: #333; }
+        .visit-table { width: 100%; background: #fff; border-radius: 16px; border: 1px solid #eee; overflow: hidden; }
+        .visit-table th { background: #faf8f5; padding: 10px 16px; text-align: left; font-size: 12px; color: #888; font-weight: 600; }
+        .visit-table td { padding: 10px 16px; font-size: 13px; color: #555; border-top: 1px solid #f5f5f5; }
+        .visit-table tr:hover td { background: #faf8f5; }
+        .visit-table .page-link { color: var(--pink); text-decoration: none; }
+        .visit-table .page-link:hover { text-decoration: underline; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tabs button { padding: 8px 20px; border: 2px solid #eee; border-radius: 40px; background: #fff; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .tabs button.active { border-color: var(--pink); color: var(--pink); font-weight: 600; }
+        .tabs button:hover { border-color: var(--gold); }
+        .refresh-btn { padding: 8px 20px; border: none; border-radius: 40px; background: var(--pink); color: #fff; cursor: pointer; font-size: 14px; margin-left: auto; }
+        .refresh-btn:hover { opacity: 0.8; }
+        .local-note { background: #fff8e1; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; font-size: 14px; color: #856404; border: 1px solid #f5d76e; }
+        .local-note strong { color: #5a4a00; }
+        @media (max-width: 700px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧘‍♀️ 瑜伽裤百科</a>
+            <span class="subtitle">· 访问统计</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌库</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">💬 语录</a>
+            <a href="forum.html">💭 讨论区</a>
+            <a href="fun.html">🏆 整活区</a>
+            <a href="crazy.html">🤪 发疯院</a>
+            <a href="stats.html" class="active">📊 统计</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>📊 访问统计</h1>
+        <p>看看你的网站访客都爱看什么</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="stats-dashboard">
+
+        <!-- 本地数据提示 -->
+        <div class="local-note" id="supabaseNote">
+            ⚠️ <strong>Supabase 表格未连接</strong> — 目前只显示本地数据（你自己浏览的记录）。<br>
+            要在服务器上记录所有人访问，见页面底部的「建表指南」。
+        </div>
+
+        <!-- 概览卡片 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="big" id="totalVisits">0</div>
+                <div class="label">总访问次数</div>
+                <div class="sub" id="totalLabel">（含本地）</div>
+            </div>
+            <div class="stat-card">
+                <div class="big" id="todayVisits">0</div>
+                <div class="label">今日访问</div>
+                <div class="sub" id="todayLabel">本日累计</div>
+            </div>
+            <div class="stat-card">
+                <div class="big" id="uniquePages">0</div>
+                <div class="label">访问页面数</div>
+                <div class="sub" id="uniqueLabel">不同路径</div>
+            </div>
+            <div class="stat-card">
+                <div class="big" id="topPageName">-</div>
+                <div class="label">最热页面</div>
+                <div class="sub" id="topPageCount">0 次访问</div>
+            </div>
+        </div>
+
+        <!-- 页面排行 -->
+        <div class="section-title">🔥 页面排行</div>
+        <div class="page-list" id="pageRanking">
+            <div style="padding: 40px; text-align: center; color: #888;">加载中...</div>
+        </div>
+
+        <!-- 最近访问 -->
+        <div style="display: flex; align-items: center; margin-top: 24px;">
+            <div class="section-title" style="margin: 0;">🕐 最近访问记录</div>
+            <button class="refresh-btn" onclick="loadStats()">🔄 刷新</button>
+        </div>
+        <div class="tabs" style="margin-top: 12px;">
+            <button class="active" data-tab="local" onclick="switchTab('local')">💻 本地记录</button>
+            <button data-tab="supabase" onclick="switchTab('supabase')">☁️ 云端数据</button>
+        </div>
+        <div class="table-wrap" style="margin-top: 0;">
+            <table class="visit-table" id="visitTable">
+                <thead>
+                    <tr><th>页面</th><th>标题</th><th>来源</th><th>屏幕</th><th>时间</th></tr>
+                </thead>
+                <tbody id="visitBody">
+                    <tr><td colspan="5" style="text-align: center; color: #888;">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 建表指南 -->
+        <div class="section-title" style="margin-top: 40px;">📋 Supabase 建表指南</div>
+        <div style="background: #1a1a2e; color: #e0e0e0; border-radius: 16px; padding: 24px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8; overflow-x: auto; white-space: pre;">
+1. 打开 https://supabase.com 进入你的项目
+
+2. 点击左侧 SQL Editor → New Query
+
+3. 粘贴以下 SQL 并运行：
+
+CREATE TABLE page_views (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  page TEXT,
+  title TEXT,
+  referrer TEXT,
+  screen TEXT,
+  visited_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can insert" ON page_views
+  FOR INSERT WITH CHECK (true);
+CREATE POLICY "Anyone can view" ON page_views
+  FOR SELECT USING (true);
+
+4. 运行成功后，刷新本页面就能看到云端数据了 🎉
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>🧘‍♀️ 瑜伽裤百科 · 访问统计 · 数据不说谎</p>
+    </div>
+</footer>
+
+<script>
+// ===== 统计页面逻辑 =====
+let tab = 'local'
+
+function switchTab(t) {
+    tab = t
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === t))
+    loadStats()
+}
+
+function loadStats() {
+    if (tab === 'local') loadLocalStats()
+    else loadSupabaseStats()
+}
+
+// ===== 本地统计（localStorage）=====
+function loadLocalStats() {
+    const visits = JSON.parse(localStorage.getItem('yugaku_visits') || '[]')
+    if (visits.length === 0) {
+        document.getElementById('totalVisits').textContent = '0'
+        document.getElementById('todayVisits').textContent = '0'
+        document.getElementById('uniquePages').textContent = '0'
+        document.getElementById('topPageName').textContent = '-'
+        document.getElementById('topPageCount').textContent = '暂无数据'
+        document.getElementById('pageRanking').innerHTML = '<div style="padding: 40px; text-align: center; color: #888;">📭 还没有访问记录。浏览几个页面后再来看看！</div>'
+        document.getElementById('visitBody').innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">暂无记录</td></tr>'
+        document.getElementById('supabaseNote').style.display = 'block'
+        return
+    }
+
+    // 统计
+    const total = visits.length
+    const today = visits.filter(v => {
+        const d = new Date(v.visited_at)
+        const now = new Date()
+        return d.toDateString() === now.toDateString()
+    }).length
+
+    // 页面排行
+    const pageCount = {}
+    visits.forEach(v => {
+        const p = v.page || '/'
+        pageCount[p] = (pageCount[p] || 0) + 1
+    })
+    const sorted = Object.entries(pageCount).sort((a, b) => b[1] - a[1])
+    const unique = sorted.length
+    const topPage = sorted[0]
+
+    document.getElementById('totalVisits').textContent = total
+    document.getElementById('todayVisits').textContent = today
+    document.getElementById('uniquePages').textContent = unique
+    document.getElementById('topPageName').textContent = topPage ? (topPage[0] === '/' ? '首页' : topPage[0].replace('.html', '')) : '-'
+    document.getElementById('topPageCount').textContent = topPage ? `${topPage[1]} 次访问` : '0 次访问'
+
+    // 页面排行列表
+    const maxCount = sorted[0]?.[1] || 1
+    document.getElementById('pageRanking').innerHTML = sorted.map(([page, count]) => {
+        const pct = (count / maxCount * 100).toFixed(0)
+        const name = page === '/' || page === '/index.html' ? '🏠 首页' : page.replace('.html', '')
+        return `<div class="page-row">
+            <span class="name">${name}</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%"></div></div>
+            <span class="count">${count}</span>
+        </div>`
+    }).join('')
+
+    // 最近访问列表
+    const recent = visits.slice(-50).reverse()
+    document.getElementById('visitBody').innerHTML = recent.map(v => {
+        const page = v.page || '/'
+        const name = page === '/' || page === '/index.html' ? '🏠 首页' : page.replace('.html', '')
+        const time = v.visited_at ? new Date(v.visited_at).toLocaleString('zh-CN') : '-'
+        return `<tr>
+            <td><a href="${page}" class="page-link" target="_blank">${name}</a></td>
+            <td>${v.title || '-'}</td>
+            <td>${v.referrer && v.referrer !== '(直接访问)' ? '🔗 站外' : '📌 直接'}</td>
+            <td>${v.screen || '-'}</td>
+            <td>${time}</td>
+        </tr>`
+    }).join('')
+
+    document.getElementById('supabaseNote').style.display = 'block'
+}
+
+// ===== 云端统计（Supabase）=====
+async function loadSupabaseStats() {
+    const tbody = document.getElementById('visitBody')
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">☁️ 正在从 Supabase 加载...</td></tr>'
+
+    if (!supabase) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #e74c3c;">❌ Supabase 未加载，请检查网络</td></tr>'
+        return
+    }
+
+    try {
+        const { data, error } = await supabase.from('page_views').select('*').order('visited_at', { ascending: false }).limit(100)
+        if (error) throw error
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">☁️ Supabase 中暂无数据。<br>如果已经创建了表格但还没有访问，刷新页面后再来看看</td></tr>'
+            document.getElementById('supabaseNote').style.display = 'block'
+            return
+        }
+
+        document.getElementById('supabaseNote').style.display = 'none'
+
+        // 统计
+        const total = data.length
+        const today = data.filter(v => {
+            const d = new Date(v.visited_at)
+            return d.toDateString() === new Date().toDateString()
+        }).length
+
+        const pageCount = {}
+        data.forEach(v => {
+            const p = v.page || '/'
+            pageCount[p] = (pageCount[p] || 0) + 1
+        })
+        const sorted = Object.entries(pageCount).sort((a, b) => b[1] - a[1])
+        const topPage = sorted[0]
+
+        document.getElementById('totalVisits').textContent = total
+        document.getElementById('todayVisits').textContent = today
+        document.getElementById('uniquePages').textContent = sorted.length
+        document.getElementById('topPageName').textContent = topPage ? (topPage[0] === '/' ? '首页' : topPage[0].replace('.html', '')) : '-'
+        document.getElementById('topPageCount').textContent = topPage ? `${topPage[1]} 次访问` : '0 次访问'
+
+        // 页面排行
+        const maxCount = sorted[0]?.[1] || 1
+        document.getElementById('pageRanking').innerHTML = sorted.map(([page, count]) => {
+            const pct = (count / maxCount * 100).toFixed(0)
+            const name = page === '/' || page === '/index.html' ? '🏠 首页' : page.replace('.html', '')
+            return `<div class="page-row">
+                <span class="name">${name}</span>
+                <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%"></div></div>
+                <span class="count">${count}</span>
+            </div>`
+        }).join('')
+
+        // 列表
+        tbody.innerHTML = data.map(v => {
+            const page = v.page || '/'
+            const name = page === '/' || page === '/index.html' ? '🏠 首页' : page.replace('.html', '')
+            const time = v.visited_at ? new Date(v.visited_at).toLocaleString('zh-CN') : '-'
+            return `<tr>
+                <td><a href="${page}" class="page-link" target="_blank">${name}</a></td>
+                <td>${v.title || '-'}</td>
+                <td>${v.referrer && v.referrer !== '(直接访问)' ? '🔗 站外' : '📌 直接'}</td>
+                <td>${v.screen || '-'}</td>
+                <td>${time}</td>
+            </tr>`
+        }).join('')
+
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #e74c3c;">❌ 加载失败：${e.message}<br>👉 请先创建 Supabase 表格（见页面底部指南）</td></tr>`
+        document.getElementById('supabaseNote').style.display = 'block'
+    }
+}
+
+// ===== 页面加载时自动加载 =====
+document.addEventListener('DOMContentLoaded', loadStats)
+</script>
+
+</body>
+</html>

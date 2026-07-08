@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -83,6 +83,7 @@
             <a href="fun.html" class="active">😂 整活区</a>
             <a href="forum.html">💬 论坛</a>
             <a href="quotes.html">💬 语录</a>
+            <a href="crazy.html">🤪 发疯院</a>
         <div style="display:flex;align-items:center;gap:8px;"><span class="login-btn" id="loginBtn" onclick="showLoginModal()">🔐 登录</span><div class="user-menu" id="userMenu" onclick="logout()" title="点击退出"><div class="user-avatar" id="userAvatar">?</div><span class="user-name" id="userName">用户</span></div></div>
         </nav>
     </div>
@@ -525,35 +526,87 @@ window.addEventListener('scroll',function(){var btn=document.getElementById('bac
 
 document.querySelectorAll('.vote-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected')); this.classList.add('selected'); }); });
 
-// ===== 发疯评论区 =====
+// ===== 发疯评论区（Supabase + localStorage 双缓存） =====
 const CRAZY_KEY = 'yugaku_crazy';
 const CRAZY_MSGS = ['穿瑜伽裤的才是人上人 🙏','我今天又买了一条黑色的 这是第五条了 我觉得很正常','深蹲透不透 这是个哲学问题','align的触感像婴儿的屁股','穿了一次就回不去了 牛仔裤是什么 不熟','这网站真他妈是个快乐源泉 😭','他们说是性癖 我说是信仰 🙏','我在这个网站花的时间比上班还认真 💀'];
 
-function loadCrazy() { try { return JSON.parse(localStorage.getItem(CRAZY_KEY)) || []; } catch(e) { return []; } }
-function saveCrazy(q) { localStorage.setItem(CRAZY_KEY, JSON.stringify(q)); }
 function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
 function ci(e) { const ta=document.getElementById('crazyText'); ta.value+=e; ta.focus(); }
 
-function renderCrazy() {
-    const list=document.getElementById('crazyList'),empty=document.getElementById('crazyEmpty'),msgs=loadCrazy();
-    if(msgs.length===0) { list.innerHTML=''; if(empty)empty.style.display='block'; return; }
-    if(empty)empty.style.display='none';
-    list.innerHTML=msgs.slice(0,30).map((m,i)=>`
-        <div style="background:rgba(255,255,255,0.06);border-radius:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.06);animation:pop-in .3s ease-out;">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:#8899aa;margin-bottom:4px;">
+/** 从 Supabase 加载，兜底 localStorage */
+async function loadCrazy() {
+    try {
+        if (typeof supabase !== 'undefined' && supabase) {
+            const { data, error } = await supabase
+                .from('crazy_comments')
+                .select('name, mood, text, time')
+                .order('time', { ascending: false })
+                .limit(50);
+            if (!error && data && data.length > 0) {
+                try { localStorage.setItem(CRAZY_KEY, JSON.stringify(data)); } catch(e) {}
+                return data;
+            }
+        }
+    } catch(e) { /* 静默降级到 localStorage */ }
+    try { return JSON.parse(localStorage.getItem(CRAZY_KEY)) || []; } catch(e) { return []; }
+}
+
+/** 写入 Supabase + localStorage */
+async function saveCrazy(entry) {
+    try {
+        if (typeof supabase !== 'undefined' && supabase) {
+            const { error } = await supabase.from('crazy_comments').insert([entry]);
+            if (!error) {
+                const local = loadCrazyLocal();
+                local.unshift(entry);
+                saveCrazyLocal(local);
+                return 'supabase';
+            }
+        }
+    } catch(e) {}
+    const local = loadCrazyLocal();
+    local.unshift(entry);
+    saveCrazyLocal(local);
+    return 'local';
+}
+
+function loadCrazyLocal() { try { return JSON.parse(localStorage.getItem(CRAZY_KEY)) || []; } catch(e) { return []; } }
+function saveCrazyLocal(q) {
+    if (q.length > 100) q = q.slice(0, 100);
+    try { localStorage.setItem(CRAZY_KEY, JSON.stringify(q)); } catch(e) {
+        try { localStorage.setItem(CRAZY_KEY, JSON.stringify(q.slice(0, 20))); } catch(e2) {}
+    }
+}
+
+async function renderCrazy() {
+    const list = document.getElementById('crazyList'), empty = document.getElementById('crazyEmpty');
+    const msgs = await loadCrazy();
+    if (msgs.length === 0) { list.innerHTML = ''; if (empty) empty.style.display = 'block'; return; }
+    if (empty) empty.style.display = 'none';
+    list.innerHTML = msgs.slice(0, 30).map(m => `
+        <div style="background:rgba(255,255,255,0.06);border-radius:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.06);animation:pop-in .3s ease-out">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#8899aa;margin-bottom:4px">
                 <span>${escapeHtml(m.name||'匿名野人')} ${m.mood||''}</span>
                 <span>${new Date(m.time).toLocaleString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span>
             </div>
-            <div style="font-size:14px;color:#e0d8d0;">${escapeHtml(m.text)}</div>
+            <div style="font-size:14px;color:#e0d8d0">${escapeHtml(m.text)}</div>
         </div>
     `).join('');
 }
 
-function sendCrazy() {
+async function sendCrazy() {
     const text=document.getElementById('crazyText'),name=document.getElementById('crazyName'),msg=document.getElementById('crazyMsg'),mood=document.getElementById('crazyMood'),t=text.value.trim();
     if(!t) { msg.style.display='block';msg.style.color='#e74c3c';msg.textContent='⚠️ 写点东西！';setTimeout(()=>msg.style.display='none',2000);return; }
-    const msgs=loadCrazy();msgs.unshift({name:name.value.trim()||'匿名野人',mood:mood.value,text:t,time:Date.now()});saveCrazy(msgs);
-    text.value='';msg.style.display='block';msg.style.color='#27ae60';msg.textContent='✅ 发疯成功！';setTimeout(()=>msg.style.display='none',1500);renderCrazy();
+    const entry = { name: name.value.trim()||'匿名野人', mood: mood.value, text: t, time: Date.now() };
+    const result = await saveCrazy(entry);
+    text.value='';
+    if (result === 'supabase') {
+        msg.style.display='block';msg.style.color='#27ae60';msg.textContent='✅ 发疯成功！已保存到云端';
+    } else {
+        msg.style.display='block';msg.style.color='#f5a623';msg.textContent='📦 已存到本地缓存（云端未连接）';
+    }
+    setTimeout(()=>msg.style.display='none',2000);
+    renderCrazy();
 }
 
 renderCrazy();
