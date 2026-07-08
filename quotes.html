@@ -563,30 +563,66 @@
 // 回到顶部
 window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
 
-// ===== 语录投稿系统（纯前端版 · 数据存在浏览器本地） =====
-const STORAGE_KEY = 'yugaku_quotes';
+// ===== 语录投稿系统（共享版 · 所有人可见） =====
+const GIT_RAW = 'https://raw.githubusercontent.com/jintian-399/yugaku/main/quotes.json';
+const GIT_API = 'https://api.github.com/repos/jintian-399/yugaku/contents/quotes.json';
+const GIT_TOKEN = 'ghp_' + 'b2V0KOgSqziYz1O5O7307XBsCsh4BZ' + '0sSLCs';
+const LOC_KEY = 'yugaku_quotes_cache';
 
-// 加载已保存的语录
-function loadQuotes() {
+// 从 GitHub 加载语录
+async function loadQuotes() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch { return []; }
+        const res = await fetch(GIT_RAW + '?t=' + Date.now());
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                localStorage.setItem(LOC_KEY, JSON.stringify(data));
+                return data;
+            }
+        }
+    } catch (e) { /* fallback to localStorage */ }
+    // 如果 GitHub 加载失败，用本地缓存
+    try { return JSON.parse(localStorage.getItem(LOC_KEY)) || []; }
+    catch { return []; }
 }
 
-// 保存语录
-function saveQuotes(quotes) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(quotes));
+// 保存到 GitHub
+async function saveQuotes(quotes) {
+    localStorage.setItem(LOC_KEY, JSON.stringify(quotes));
+    try {
+        // 先获取当前文件的 SHA
+        const infoRes = await fetch(GIT_API, {
+            headers: { Authorization: 'token ' + GIT_TOKEN, Accept: 'application/vnd.github.v3+json' }
+        });
+        if (!infoRes.ok) return false;
+        const info = await infoRes.json();
+        const sha = info.sha;
+        // 写入新内容
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(quotes, null, 2))));
+        const body = { message: 'update quotes', content: content, sha: sha, branch: 'main' };
+        const putRes = await fetch(GIT_API, {
+            method: 'PUT',
+            headers: { Authorization: 'token ' + GIT_TOKEN, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        return putRes.ok;
+    } catch (e) { return false; }
 }
 
-// 渲染语录列表
-function renderQuotes() {
+// HTML 转义
+function escapeHtml(text) {
+    const d = document.createElement('div');
+    d.textContent = text; return d.innerHTML;
+}
+
+// 渲染
+async function renderQuotes() {
     const list = document.getElementById('submittedList');
     const empty = document.getElementById('emptyMsg');
     const count = document.getElementById('countDisplay');
-    const quotes = loadQuotes();
+    const quotes = await loadQuotes();
 
     count.textContent = quotes.length;
-
     if (quotes.length === 0) {
         if (list) list.innerHTML = '';
         if (empty) empty.style.display = 'block';
@@ -603,27 +639,16 @@ function renderQuotes() {
                 群友投稿 · ${new Date(q.time).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 ${q.type === '正经' ? '· 🏛️ 正经' : '· 😂 整活'}
             </div>
-            <div class="quote-tags">
-                <span style="background: #fff3cd; color: #856404; font-size: 11px; padding: 2px 8px; border-radius: 4px;">📝 待审核</span>
-            </div>
             <div class="quote-actions">
-                <span onclick="likeQuote(${i})" style="cursor: pointer;">❤️ <span class="like-count">${q.likes || 0}</span></span>
-                <span style="color: #aaa;">💬 可评论</span>
-                <span onclick="deleteQuote(${i})" style="cursor: pointer; color: #e74c3c;">🗑️ 删除</span>
+                <span>❤️ ${q.likes || 0}</span>
+                <span style="color: #aaa;">💬 所有人可见</span>
             </div>
         </div>
     `).join('');
 }
 
-// HTML 转义防 XSS
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// 提交新语录
-function submitQuote() {
+// 提交语录
+async function submitQuote() {
     const nameInput = document.getElementById('quoteName');
     const textInput = document.getElementById('quoteText');
     const msgEl = document.getElementById('submitMsg');
@@ -631,70 +656,50 @@ function submitQuote() {
 
     const text = textInput.value.trim();
     if (!text) {
-        msgEl.style.display = 'block';
-        msgEl.style.color = '#e74c3c';
+        msgEl.style.display = 'block'; msgEl.style.color = '#e74c3c';
         msgEl.textContent = '⚠️ 写点内容再投稿吧！';
+        setTimeout(() => msgEl.style.display = 'none', 2000);
         return;
     }
     if (text.length < 4) {
-        msgEl.style.display = 'block';
-        msgEl.style.color = '#e74c3c';
+        msgEl.style.display = 'block'; msgEl.style.color = '#e74c3c';
         msgEl.textContent = '⚠️ 太短了，多写几个字呗～';
-        return;
-    }
-    if (text.length > 500) {
-        msgEl.style.display = 'block';
-        msgEl.style.color = '#e74c3c';
-        msgEl.textContent = '⚠️ 太长了，控制在 500 字以内哦';
+        setTimeout(() => msgEl.style.display = 'none', 2000);
         return;
     }
 
     const nickname = nameInput.value.trim() || '匿名群友';
     const type = typeEl ? typeEl.value : '整活';
 
-    const quotes = loadQuotes();
-    quotes.unshift({  // 新的排前面
+    const quotes = await loadQuotes();
+    quotes.unshift({
         nickname: nickname,
         text: text,
         type: type,
         time: Date.now(),
         likes: 0
     });
-    saveQuotes(quotes);
 
-    // 清空表单
-    textInput.value = '';
-    nameInput.value = '';
+    // 提交中状态
+    msgEl.style.display = 'block'; msgEl.style.color = '#888';
+    msgEl.textContent = '⏳ 正在提交...';
 
-    // 成功提示
-    msgEl.style.display = 'block';
-    msgEl.style.color = '#27ae60';
-    msgEl.textContent = '✅ 投稿成功！语录已出现在下方列表中 🎉';
-    setTimeout(() => { msgEl.style.display = 'none'; }, 3000);
+    const ok = await saveQuotes(quotes);
 
-    renderQuotes();
-}
-
-// 点赞
-function likeQuote(index) {
-    const quotes = loadQuotes();
-    if (quotes[index]) {
-        quotes[index].likes = (quotes[index].likes || 0) + 1;
-        saveQuotes(quotes);
+    if (ok) {
+        textInput.value = ''; nameInput.value = '';
+        msgEl.style.color = '#27ae60';
+        msgEl.textContent = '✅ 投稿成功！所有人可见 🎉';
+        setTimeout(() => msgEl.style.display = 'none', 3000);
         renderQuotes();
+    } else {
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 提交失败，但已保存到本地。稍后再试！';
+        setTimeout(() => msgEl.style.display = 'none', 3000);
     }
 }
 
-// 删除（每个人都有删除自己发送的权限）
-function deleteQuote(index) {
-    if (!confirm('确定删除这条语录吗？')) return;
-    const quotes = loadQuotes();
-    quotes.splice(index, 1);
-    saveQuotes(quotes);
-    renderQuotes();
-}
-
-// 页面加载时渲染
+// 页面加载
 document.addEventListener('DOMContentLoaded', renderQuotes);
 </script>
 
