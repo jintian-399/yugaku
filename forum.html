@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>论坛 — 瑜伽裤百科</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif; background: #f5f3f0; color: #2d2a24; -webkit-font-smoothing: antialiased; }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460); color: #fff; padding: 14px 0; position: sticky; top: 0; z-index: 100;
+        }
+        .header .c { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: 800; }
+        .logo a { color: #fff; text-decoration: none; background: linear-gradient(90deg, #e94560, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav { display: flex; gap: 16px; }
+        .nav a { color: #ccd6e0; font-size: 14px; text-decoration: none; transition: color 0.2s; }
+        .nav a:hover { color: #fff; }
+        .nav a.active { color: #fff; border-bottom: 2px solid #e94560; }
+
+        .hero {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e); color: #fff; padding: 40px 20px; text-align: center;
+        }
+        .hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 6px; }
+        .hero p { color: #99aabb; font-size: 15px; }
+
+        .c { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== 统计条 ===== */
+        .stats { display: flex; gap: 20px; justify-content: center; margin: -20px auto 24px; background: #fff; border-radius: 14px; padding: 16px 24px; max-width: 600px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid #eee; position: relative; z-index: 2; }
+        .stats .s { text-align: center; flex: 1; }
+        .stats .n { font-size: 22px; font-weight: 800; color: #e94560; }
+        .stats .l { font-size: 12px; color: #888; }
+
+        /* ===== 分类卡片 ===== */
+        .categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 24px 0; }
+        .cat { background: #fff; border-radius: 14px; padding: 20px; border: 1px solid #eee; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .cat:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: #ddd; }
+        .cat .icon { font-size: 28px; margin-bottom: 8px; }
+        .cat h3 { font-size: 16px; margin-bottom: 4px; }
+        .cat p { font-size: 13px; color: #888; }
+
+        /* ===== 帖子列表 ===== */
+        .section-title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; display: flex; justify-content: space-between; align-items: center; }
+        .section-title .more { font-size: 13px; color: #e94560; text-decoration: none; font-weight: 400; }
+
+        .topic { background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: all 0.15s; text-decoration: none; color: inherit; }
+        .topic:hover { border-color: #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .topic .left { flex: 1; min-width: 0; }
+        .topic .title { font-size: 15px; font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .topic .meta { font-size: 12px; color: #999; }
+        .topic .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #fef3e2; color: #e67e22; margin-right: 8px; }
+        .topic .right { text-align: right; font-size: 13px; color: #999; white-space: nowrap; }
+
+        .empty { text-align: center; padding: 60px 20px; color: #888; border: 2px dashed #ddd; border-radius: 14px; }
+        .empty .big { font-size: 40px; margin-bottom: 8px; }
+
+        .btn { display: inline-block; padding: 10px 24px; border-radius: 40px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233,69,96,0.3); }
+        .btn-outline { background: transparent; color: #e94560; border: 2px solid #e94560; }
+        .btn-outline:hover { background: #e94560; color: #fff; }
+
+        .cta { text-align: center; margin: 32px 0; }
+        .cta p { font-size: 14px; color: #888; margin-bottom: 12px; }
+
+        .footer { text-align: center; padding: 32px 20px; color: #999; font-size: 13px; border-top: 1px solid #eee; margin-top: 40px; }
+
+        @media (max-width: 700px) {
+            .stats { flex-wrap: wrap; gap: 10px; }
+            .categories { grid-template-columns: 1fr 1fr; }
+            .topic { flex-direction: column; align-items: flex-start; }
+            .topic .right { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="c">
+        <div class="logo"><a href="index.html">🧘‍♀️ 瑜伽裤百科</a></div>
+        <div class="nav">
+            <a href="index.html">首页</a>
+            <a href="guide.html">选购介绍</a>
+            <a href="fun.html">整活区</a>
+            <a href="forum.html" class="active">💬 论坛</a>
+            <a href="quotes.html">语录</a>
+        </div>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>💬 论坛</h1>
+    <p>分话题讨论 · 需要 GitHub 账号参与</p>
+</div>
+
+<div class="c">
+
+    <!-- ===== 统计 ===== -->
+    <div class="stats" id="statsBar">
+        <div class="s"><div class="n" id="totalTopics">-</div><div class="l">帖子</div></div>
+        <div class="s"><div class="n" id="totalCats">4</div><div class="l">分类</div></div>
+        <div class="s"><div class="n" id="totalUsers">-</div><div class="l">参与人数</div></div>
+    </div>
+
+    <!-- ===== 分类 ===== -->
+    <div class="categories">
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/瑜伽裤推荐" target="_blank" class="cat">
+            <div class="icon">🛍️</div>
+            <h3>瑜伽裤推荐</h3>
+            <p>买哪条好？哪个品牌值得入？</p>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/穿搭分享" target="_blank" class="cat">
+            <div class="icon">👗</div>
+            <h3>穿搭分享</h3>
+            <p>日常搭配、健身房穿搭</p>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/面料研究所" target="_blank" class="cat">
+            <div class="icon">🔬</div>
+            <h3>面料研究所</h3>
+            <p>技术向讨论、面料对比</p>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/整活闲聊" target="_blank" class="cat">
+            <div class="icon">🤪</div>
+            <h3>整活闲聊</h3>
+            <p>随意聊天，不限主题</p>
+        </a>
+    </div>
+
+    <!-- ===== 最新帖子 ===== -->
+    <div class="section-title">
+        <span>📌 最新讨论</span>
+        <a href="https://github.com/jintian-399/yugaku/discussions" target="_blank" class="more">查看全部 →</a>
+    </div>
+    <div id="topicList"><div class="empty"><div class="big">⏳</div><p>加载中...</p></div></div>
+
+    <!-- ===== 去发帖 ===== -->
+    <div class="cta">
+        <p>💡 参与讨论需要 GitHub 账号</p>
+        <a href="https://github.com/jintian-399/yugaku/discussions/new/choose" target="_blank" class="btn btn-primary">📝 发新帖</a>
+        <a href="https://github.com/jintian-399/yugaku/discussions" target="_blank" class="btn btn-outline" style="margin-left:10px;">💬 浏览全部</a>
+    </div>
+
+</div>
+
+<div class="footer">🧘‍♀️ 瑜伽裤百科 · 论坛 · yugaku.online</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:50%;background:#e94560;color:#fff;border:none;font-size:18px;cursor:pointer;display:none;box-shadow:0 4px 15px rgba(233,69,96,0.3);z-index:99;">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('backToTop');if(b)b.style.display=window.scrollY>400?'flex':'none';});
+
+async function loadTopics() {
+    try {
+        const r = await fetch('https://api.github.com/repos/jintian-399/yugaku/discussions?per_page=10&sort=updated', { headers: { Accept: 'application/vnd.github.v3+json' } });
+        if (!r.ok) throw new Error();
+        const data = await r.json();
+        const list = document.getElementById('topicList');
+        if (!data || data.length === 0) {
+            list.innerHTML = '<div class="empty"><div class="big">📭</div><p>还没有讨论，去发起第一个话题吧！</p></div>';
+            document.getElementById('totalTopics').textContent = '0';
+            return;
+        }
+        document.getElementById('totalTopics').textContent = data.length;
+        list.innerHTML = data.map(t => `
+            <a href="${t.html_url}" target="_blank" class="topic">
+                <div class="left">
+                    <div class="title"><span class="badge">${t.category?.name || '闲聊'}</span>${t.title}</div>
+                    <div class="meta">💬 ${t.comments || 0} 条回复 · ${new Date(t.created_at).toLocaleDateString('zh-CN')}</div>
+                </div>
+                <div class="right">${new Date(t.updated_at).toLocaleDateString('zh-CN')}</div>
+            </a>
+        `).join('');
+    } catch(e) {
+        document.getElementById('topicList').innerHTML = '<div class="empty"><div class="big">📭</div><p>还没有讨论，去 GitHub 发起第一个话题吧！</p></div>';
+        document.getElementById('totalTopics').textContent = '0';
+    }
+}
+loadTopics();
+</script>
+</body>
+</html>
