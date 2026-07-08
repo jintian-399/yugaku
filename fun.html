@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 整活区 — 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 整活区专属花里胡哨样式 */
+        .glow-text {
+            background: linear-gradient(90deg, #e94560, #f5a623, #e94560);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+        .vote-btn {
+            display: inline-block; padding: 10px 20px; border-radius: 40px;
+            font-weight: 600; border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05); color: #fff;
+            transition: all 0.15s; cursor: pointer;
+        }
+        .vote-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+        .vote-btn.selected { background: #e94560; border-color: #e94560; }
+        .meme-placeholder {
+            background: linear-gradient(135deg, #2d1b4e, #1a1a2e);
+            border-radius: 16px; padding: 40px; text-align: center;
+            color: #667788; border: 2px dashed rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(180deg, #e94560, #f5a623);
+        }
+        .timeline-item { position: relative; margin-bottom: 28px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -26px; top: 6px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #e94560; border: 2px solid #1a1a2e;
+        }
+        .timeline-item .year {
+            font-weight: 800; font-size: 18px; color: #f5a623;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧘‍♀️ 瑜伽裤百科</a>
+            <span class="subtitle" style="-webkit-text-fill-color: #f5a623;">· 整活区 🔞</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌库</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">💬 语录</a>
+            <a href="crazy.html">🤪 疯人院</a>
+            <a href="fun.html" class="active">🏆 整活区</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-hero" style="background: linear-gradient(135deg, #1a1a2e, #2d1b4e, #0f3460);">
+    <div class="container">
+        <h1>🏆 <span class="glow-text">整活专区</span></h1>
+        <p>如果你觉得这是性癖，那我们把它变成文化</p>
+        <div style="margin-top: 16px; font-size: 14px; color: #8899aa;">
+            ⚠️ 以下内容含有大量不正经内容 · 请放松阅读 · 笑就完事了
+        </div>
+    </div>
+</section>
+
+<!-- ===== 透不透实验室 ===== -->
+<div class="fun-section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <span class="tag tag-hot" style="font-size: 14px; padding: 4px 16px;">🔥 本周最热</span>
+            <h2 style="font-size: 28px; margin-top: 12px; color: #fff;">「透不透」实验室 Vol.3</h2>
+            <p style="color: #99aabb;">12 个品牌白色瑜伽裤 · 同天同光 · 深蹲大横评</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+            <div class="fun-card" style="border: 1px solid rgba(233,69,96,0.3);">
+                <h3 style="color: #e94560;">🛡️ Safe Zone</h3>
+                <p style="margin: 8px 0;"><strong>深蹲完全没问题</strong></p>
+                <p style="font-size: 13px;">
+                    Lululemon Wunder Train 白<br>
+                    Lorna Jane 全系列白<br>
+                    Nike Epic Luxe 白<br>
+                    MAIA 腰精裤白（旧版）
+                </p>
+                <div class="votes"><span>👍 128 人验证</span></div>
+            </div>
+            <div class="fun-card" style="border: 1px solid rgba(245,166,35,0.3);">
+                <h3 style="color: #f5a623;">⚠️ Risky Zone</h3>
+                <p style="margin: 8px 0;"><strong>光线角度决定生死</strong></p>
+                <p style="font-size: 13px;">
+                    Lululemon Align 白（浅色薄款）<br>
+                    Alo Airbrush 白（看批次）<br>
+                    暴走的萝莉 浅灰色系<br>
+                    Nike 基础款白
+                </p>
+                <div class="votes"><span>👍 89 人验证</span></div>
+            </div>
+            <div class="fun-card" style="border: 1px solid rgba(231,76,60,0.3);">
+                <h3 style="color: #e74c3c;">🚨 Danger Zone</h3>
+                <p style="margin: 8px 0;"><strong>深蹲前请三思</strong></p>
+                <p style="font-size: 13px;">
+                    某宝白牌 ¥39 白色款<br>
+                    Alo 某些薄款浅色<br>
+                    MAIA 云感裤白（薄款批次）<br>
+                    优衣库 AIRism 白色
+                </p>
+                <div class="votes"><span>👍 67 人含泪验证</span></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 24px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.05);">
+            <p style="color: #99aabb; font-size: 14px;">
+                📸 实际测试照片请在群里私聊查看 · 这里放出来怕被举报 🫣
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ===== 瑜伽裤编年史 ===== -->
+    <div class="section-title">
+        <div class="emoji-badge badge-fun">📖 连载</div>
+        <h2>瑜伽裤编年史</h2>
+        <p>从健身房的专属装备，到人人衣柜里的必备单品</p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #1a1a2e, #0f3460); border-radius: 20px; padding: 32px; color: #fff;">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">1970s</div>
+                <h4>健美操时代 · 灯芯绒健美裤</h4>
+                <p style="color: #99aabb; font-size: 14px;">Jane Fonda 的健身录像带火了一波紧身运动裤。但那会儿的面料嘛……基本上是加了弹力的棉布，一出汗就黏腿。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">1987</div>
+                <h4>氨纶被大规模应用</h4>
+                <p style="color: #99aabb; font-size: 14px;">杜邦公司（现 Invista）的 Lycra® 氨纶纤维开始大规模进入运动服装领域。弹性革命开始了。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">1998</div>
+                <h4>🎯 Lululemon 诞生</h4>
+                <p style="color: #99aabb; font-size: 14px;">Chip Wilson 在温哥华开了第一家 Lululemon。他在瑜伽课上发现——等等，为什么没有人专门为瑜伽做裤子？然后就做了。改变了世界。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2000s</div>
+                <h4>瑜伽裤从小众到主流</h4>
+                <p style="color: #99aabb; font-size: 14px;">Lululemon 开了社区瑜伽课的模式，把瑜伽裤从"运动装备"变成了"生活方式"。价格贵但排长队，成为中产标配。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2013</div>
+                <h4>穿瑜伽裤上街被抗议</h4>
+                <p style="color: #99aabb; font-size: 14px;">美国一社区有人贴告示"禁止穿瑜伽裤出门"，引发全网反弹。
+                最终抗议以"管得着吗你"告终。瑜伽裤从此正大光明地走上了街头。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2016~2020</div>
+                <h4>国产品牌崛起</h4>
+                <p style="color: #99aabb; font-size: 14px;">MAIA ACTIVE（2016）、暴走的萝莉（2014）等国产品牌爆发。
+                Lululemon 不再是唯一选择，瑜伽裤价格从 ¥800 打到 ¥100。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2023~2025</div>
+                <h4>瑜伽裤 = 日常穿搭</h4>
+                <p style="color: #99aabb; font-size: 14px;">超充时代来了（串场了）。瑜伽裤已经完全走出健身房——坐地铁、逛超市、喝咖啡、上班（某些公司），怎么穿都合理。
+                <strong>一条黑色高腰瑜伽裤，已经成为当代女性的"牛仔裤"。</strong></p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2026</div>
+                <h4 style="color: #f5a623;">🤯 瑜伽裤百科诞生</h4>
+                <p style="color: #99aabb; font-size: 14px;">一群群友在聊天时说了句"这是性癖吧"，然后有人一拍大腿——那就建个网站吧。
+                于是有了这个站。历史总是这样开始的。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== "这是性癖吗？"投票 ===== -->
+    <div class="section-title" style="margin-top: 48px;">
+        <h2>🎯 「这是性癖吗？」匿名大调查</h2>
+        <p>已有 <strong style="color: var(--pink);">1,284</strong> 人参与 · 结果实时更新</p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #1a1a2e, #2d1b4e); border-radius: 20px; padding: 40px; color: #fff; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🤔</div>
+        <h3 style="font-size: 22px; margin-bottom: 20px;">你觉得，喜欢瑜伽裤是性癖吗？</h3>
+
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+            <span class="vote-btn" onclick="alert('你投了：纯属审美欣赏！这个结果会记在小本本上')">😌 纯属审美欣赏</span>
+            <span class="vote-btn" onclick="alert('你投了：是又怎样！坦坦荡荡')">😈 是又怎样</span>
+            <span class="vote-btn" onclick="alert('你投了：我没想过这个问题')">🤷 没想过</span>
+            <span class="vote-btn" onclick="alert('你投了：我是来看评论的')">🍿 来看评论</span>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px;">
+            <p style="font-size: 14px; color: #99aabb; margin-bottom: 12px;">当前投票结果</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px;">
+                <div>
+                    <div style="font-size: 28px; font-weight: 800; color: #2ecc71;">68%</div>
+                    <div style="font-size: 12px; color: #8899aa;">纯属审美欣赏</div>
+                </div>
+                <div>
+                    <div style="font-size: 28px; font-weight: 800; color: #e94560;">18%</div>
+                    <div style="font-size: 12px; color: #8899aa;">是又怎样 😈</div>
+                </div>
+                <div>
+                    <div style="font-size: 28px; font-weight: 800; color: #f5a623;">10%</div>
+                    <div style="font-size: 12px; color: #8899aa;">没想过</div>
+                </div>
+                <div>
+                    <div style="font-size: 28px; font-weight: 800; color: #3498db;">4%</div>
+                    <div style="font-size: 12px; color: #8899aa;">来看评论</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 社群投稿 ===== -->
+    <div class="section-title" style="margin-top: 48px;">
+        <h2>📸 社群投稿</h2>
+        <p>来自群友的不露脸穿搭分享 · 欢迎投稿</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;">
+        <div style="background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #eee;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #e94560, #f5a623);"></div>
+                <div>
+                    <strong style="font-size: 14px;">匿名用户 #0421</strong>
+                    <div style="font-size: 12px; color: #888;">昨天</div>
+                </div>
+            </div>
+            <div class="meme-placeholder" style="padding: 24px;">
+                📷 穿搭照片示意位<br>
+                <span style="font-size: 12px;">黑色Align + 白色oversize卫衣</span>
+            </div>
+            <p style="font-size: 14px; margin-top: 8px;">"黑色高腰配白T，通勤穿被同事说看起来像去健身的路上"</p>
+            <div class="votes" style="margin-top: 8px; color: #888; font-size: 13px;">
+                <span>❤️ 34</span>
+                <span>💬 12</span>
+            </div>
+        </div>
+
+        <div style="background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #eee;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3498db, #2980b9);"></div>
+                <div>
+                    <strong style="font-size: 14px;">匿名用户 #1002</strong>
+                    <div style="font-size: 12px; color: #888;">3天前</div>
+                </div>
+            </div>
+            <div class="meme-placeholder" style="padding: 24px;">
+                📷 穿搭照片示意位<br>
+                <span style="font-size: 12px;">MAIA云感裤灰 + 短款运动背心</span>
+            </div>
+            <p style="font-size: 14px; margin-top: 8px;">"第一次买国产云感裤，说实话被惊艳到了——不比Align差多少，价格1/3"</p>
+            <div class="votes" style="margin-top: 8px; color: #888; font-size: 13px;">
+                <span>❤️ 67</span>
+                <span>💬 28</span>
+            </div>
+        </div>
+
+        <div style="background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #eee;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #2ecc71, #27ae60);"></div>
+                <div>
+                    <strong style="font-size: 14px;">匿名用户 #0730</strong>
+                    <div style="font-size: 12px; color: #888;">5天前</div>
+                </div>
+            </div>
+            <div class="meme-placeholder" style="padding: 24px;">
+                📷 穿搭照片示意位<br>
+                <span style="font-size: 12px;">Alo Airbrush 深蓝 + 西装外套</span>
+            </div>
+            <p style="font-size: 14px; margin-top: 8px;">"用瑜伽裤搭西装，没想到意外的好看。正式中带点休闲，开会也不违和"</p>
+            <div class="votes" style="margin-top: 8px; color: #888; font-size: 13px;">
+                <span>❤️ 89</span>
+                <span>💬 34</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 24px;">
+        <div style="background: #fff; border-radius: 16px; padding: 24px; border: 2px dashed var(--gold);">
+            <h3 style="color: var(--gold-dark);">😎 你也想投稿？</h3>
+            <p style="color: #888; font-size: 14px; margin: 8px 0;">
+                拍一张穿搭照（不露脸），配上你的心得，发到群里 @Max<br>
+                入选者可以……获得群友的点赞 👍
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== 梗图区 ===== -->
+    <div class="section-title" style="margin-top: 48px;">
+        <h2>😆 梗图专区</h2>
+        <p>瑜伽裤相关的表情包 · 征集ing</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;">
+        <div class="meme-placeholder" style="padding: 48px 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-size: 42px; margin-bottom: 8px;">🧘‍♀️</div>
+            <p style="font-size: 13px;">"穿瑜伽裤去超市<br>只是想买瓶水"<br>（结果逛了2小时）</p>
+        </div>
+        <div class="meme-placeholder" style="padding: 48px 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-size: 42px; margin-bottom: 8px;">🦵</div>
+            <p style="font-size: 13px;">"男朋友说<br>这条裤子显腿长"<br>（我知道他在看什么）</p>
+        </div>
+        <div class="meme-placeholder" style="padding: 48px 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-size: 42px; margin-bottom: 8px;">💸</div>
+            <p style="font-size: 13px;">"一条Lululemon<br>= 一个月饭钱"<br>（值得，我说值得）</p>
+        </div>
+        <div class="meme-placeholder" style="padding: 48px 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-size: 42px; margin-bottom: 8px;">🤨</div>
+            <p style="font-size: 13px;">"他们说我是性癖"<br>"我说：<br>那你为什么也在看？"</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 24px 0 8px;">
+        <p style="color: #888; font-size: 14px;">🎨 梗图持续征集中——有好图的发群里！</p>
+    </div>
+
+    <!-- ===== 名场面语录 ===== -->
+    <div class="section-title" style="margin-top: 40px;">
+        <h2>🎬 群友金句 · 名场面收录</h2>
+        <p>来自群里的经典发言记录</p>
+    </div>
+
+    <div style="display: grid; gap: 12px;">
+        <div style="background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; border-left: 4px solid var(--pink);">
+            <p style="font-size: 15px;"><em>"我喜欢瑜伽裤，就像喜欢落日和晚风一样。这是审美，不是性癖。"</em></p>
+            <p style="font-size: 12px; color: #888; margin-top: 4px;">—— 群友 A</p>
+        </div>
+        <div style="background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; border-left: 4px solid var(--gold);">
+            <p style="font-size: 15px;"><em>"第一次穿Align的时候，我惊了——原来裤子可以做到像没穿一样舒服。这不是性癖，这是科技。"</em></p>
+            <p style="font-size: 12px; color: #888; margin-top: 4px;">—— 群友 B</p>
+        </div>
+        <div style="background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; border-left: 4px solid var(--green);">
+            <p style="font-size: 15px;"><em>"群主建了这个站之后，我反而开始怀疑了——你这么认真搞这个，到底是不是性癖？"</em></p>
+            <p style="font-size: 12px; color: #888; margin-top: 4px;">—— 群友 C（被群主禁言 10 分钟）</p>
+        </div>
+        <div style="background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; border-left: 4px solid var(--purple);">
+            <p style="font-size: 15px;"><em>"男穿瑜伽裤怎么了？舒服就是正义。不过……选黑色比较安全。"</em></p>
+            <p style="font-size: 12px; color: #888; margin-top: 4px;">—— 群友 D（男）</p>
+        </div>
+        <div style="background: #fff; border-radius: 12px; padding: 16px 20px; border: 1px solid #eee; border-left: 4px solid var(--pink);">
+            <p style="font-size: 15px;"><em>"我女朋友的瑜伽裤比我的牛仔裤还多，衣柜里半壁江山都是。我支持她——因为我也爱看。"</em></p>
+            <p style="font-size: 12px; color: #888; margin-top: 4px;">—— 群友 E（诚实版）</p>
+        </div>
+    </div>
+
+    <!-- ===== 结尾定调 ===== -->
+    <div style="background: linear-gradient(135deg, #fff8e1, #fff3cd); border-radius: 20px; padding: 40px; margin: 48px 0; text-align: center; border: 2px solid #faeccd;">
+        <h3 style="font-size: 24px; color: #856404;">本站立场声明</h3>
+        <div style="max-width: 600px; margin: 16px auto; color: #6d5200; font-size: 15px;">
+            <p>
+                🧘 瑜伽裤本质上是一种功能性服装，和篮球鞋、冲锋衣没有区别。<br><br>
+                😈 如果有人非说这是性癖——那我们把这件事做得足够认真、足够有趣，
+                让它变成爱好，变成文化，变成一群人乐在其中的事。<br><br>
+                <strong>认真科普，大胆玩梗，尊重每一种审美。</strong><br><br>
+                最后送上一句群友的话：
+            </p>
+            <blockquote style="font-size: 18px; font-style: italic; margin: 16px 0; padding: 12px; border-left: 4px solid #f5a623; background: rgba(255,255,255,0.5); border-radius: 4px;">
+                "喜欢漂亮的东西，从来不需要理由。"
+            </blockquote>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>🧘‍♀️ 瑜伽裤百科 · 整活区 · 笑就完事了 🍑</p>
+        <div class="disclaimer">
+            整活区所有内容均为群友娱乐创作，不代表本站正式立场。
+            如果你觉得冒犯了——穿条瑜伽裤放松一下。
+        </div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
+
+
+    // 纯装饰性代码：让页面有点交互感
+    document.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+</script>
+</body>
+</html>
