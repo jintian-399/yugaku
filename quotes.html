@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑜伽裤语录 — 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .quote-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .quote-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .quote-card .quote-mark {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            font-size: 48px;
+            color: #eee;
+            font-family: Georgia, serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+        .quote-card .quote-text {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            padding-left: 8px;
+        }
+        .quote-card .quote-author {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .quote-card .quote-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .quote-card.serious { border-left: 4px solid var(--tag-serious-text); }
+        .quote-card.fun { border-left: 4px solid var(--tag-fun-text); }
+        .quote-card.hot { border-left: 4px solid var(--pink); }
+        .quote-card.deep { border-left: 4px solid var(--purple); }
+        .quote-card .quote-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #aaa;
+        }
+        .quote-card .quote-actions span { cursor: pointer; transition: color 0.15s; }
+        .quote-card .quote-actions span:hover { color: var(--pink); }
+        .quote-card .quote-source {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 4px;
+        }
+        .featured-quote {
+            background: linear-gradient(135deg, var(--blue-darker), #2d1b4e);
+            color: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 32px 0;
+        }
+        .featured-quote .big-quote {
+            font-size: 64px;
+            line-height: 1;
+            color: rgba(255,255,255,0.1);
+            font-family: Georgia, serif;
+        }
+        .featured-quote .quote-text {
+            font-size: 24px;
+            line-height: 1.6;
+            margin: 16px 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .featured-quote .quote-author {
+            color: var(--gold);
+            font-size: 16px;
+        }
+        .quote-day-badge {
+            display: inline-block;
+            background: var(--pink);
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧘‍♀️ 瑜伽裤百科</a>
+            <span class="subtitle">· 语录</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌库</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html" class="active">💬 语录</a>
+            <a href="crazy.html">🤪 疯人院</a>
+            <a href="fun.html">🏆 整活区</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>💬 瑜伽裤语录</h1>
+        <p>关于瑜伽裤，总有一些话说到了心坎里</p>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- ===== 每日一句 ===== -->
+    <div class="featured-quote">
+        <div class="quote-day-badge">⭐ 本日推荐</div>
+        <div class="big-quote">"</div>
+        <div class="quote-text">
+            瑜伽裤之所以伟大，是因为它同时做到了两件事：<br>
+            让你动起来的时候舒服，<br>
+            停下来的时候好看。
+        </div>
+        <div class="quote-author">—— 本站编辑 · Max</div>
+    </div>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <h4>语录分类</h4>
+            <a href="#daily">每日推荐</a>
+            <a href="#philosophy">🏛️ 正经哲学</a>
+            <a href="#funny">😂 整活金句</a>
+            <a href="#group">👥 群友语录</a>
+            <a href="#famous">🌟 名人名言</a>
+            <a href="#internet">🌐 网络名场面</a>
+        </aside>
+
+        <div class="main-content">
+
+            <!-- ===== 正经哲学 ===== -->
+            <h2 class="section-title" id="philosophy" style="padding-top: 0; text-align: left;">
+                <span class="emoji-badge badge-serious">🏛️</span>
+                正经哲学
+            </h2>
+
+            <div class="quote-card serious">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    瑜伽裤不是穿给别人看的。它是一种自我对话的方式——
+                    当你穿上它的那一刻，你就在告诉自己：今天我要对自己好一点。
+                </div>
+                <div class="quote-author">—— 匿名瑜伽爱好者</div>
+                <div class="quote-tags">
+                    <span class="tag tag-serious">生活哲学</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 234</span>
+                    <span>💬 28</span>
+                    <span>📋 复制</span>
+                </div>
+            </div>
+
+            <div class="quote-card serious">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    一条好的瑜伽裤，是你对自己身体的尊重。
+                    它不掩饰，不夸张，只是诚实地拥抱你的每一寸曲线。
+                </div>
+                <div class="quote-author">—— 服装设计师 山本耀司（传）</div>
+                <div class="quote-tags">
+                    <span class="tag tag-serious">时尚态度</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 189</span>
+                    <span>💬 15</span>
+                </div>
+            </div>
+
+            <div class="quote-card serious">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    从 Jane Fonda 的健美裤到 Lululemon 的 Align，
+                    瑜伽裤用 40 年时间完成了一场服装革命——它证明了：
+                    舒适和性感从来不是对立面。
+                </div>
+                <div class="quote-author">—— 运动时尚史研究者</div>
+                <div class="quote-tags">
+                    <span class="tag tag-serious">服装简史</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 156</span>
+                    <span>💬 22</span>
+                </div>
+            </div>
+
+            <div class="quote-card deep">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    当女性穿上瑜伽裤走出家门的那一刻，她其实在说一句话：
+                    "我的身体，我来定义。"
+                </div>
+                <div class="quote-author">—— 社交媒体评论</div>
+                <div class="quote-tags">
+                    <span class="tag" style="background: #f0e6f6; color: #7b1fa2;">女性主义</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 312</span>
+                    <span>💬 67</span>
+                </div>
+            </div>
+
+            <!-- ===== 整活金句 ===== -->
+            <h2 class="section-title" id="funny" style="text-align: left;">
+                <span class="emoji-badge badge-fun">😂</span>
+                整活金句
+            </h2>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    我买瑜伽裤的理由：<br>
+                    第一，舒服。<br>
+                    第二，显瘦。<br>
+                    第三，不用想今天穿什么。
+                </div>
+                <div class="quote-author">—— 每个拥有超过 5 条瑜伽裤的人</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">人间真实</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 567</span>
+                    <span>💬 89</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    男朋友："你又买了一条黑色瑜伽裤？你不是已经有 3 条了吗？"<br>
+                    我："不一样，这条的线缝位置不一样。"<br>
+                    男朋友：（沉默）<br>
+                    我：（幸福地拆包装）
+                </div>
+                <div class="quote-author">—— 豆瓣「瑜伽裤受害者」小组</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">情侣日常</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 892</span>
+                    <span>💬 156</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    Lululemon 的 Align 有一个神奇的功能：<br>
+                    穿上之后，你会忍不住一直摸自己的腿。
+                </div>
+                <div class="quote-author">—— 某 Reddit 用户</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">太真实了</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 723</span>
+                    <span>💬 102</span>
+                </div>
+            </div>
+
+            <div class="quote-card hot">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    穿瑜伽裤去超市 = 我只是顺便买个菜<br>
+                    实际：在超市里走了 5000 步，就为了多穿一会儿。
+                </div>
+                <div class="quote-author">—— Twitter 热门推文</div>
+                <div class="quote-tags">
+                    <span class="tag tag-hot">🔥 本周热推</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 1,234</span>
+                    <span>💬 234</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    "你这裤子看起来像第二层皮肤。"<br>
+                    "谢谢，这就是它存在的意义。"
+                </div>
+                <div class="quote-author">—— 日常对话</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">短小精悍</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 445</span>
+                    <span>💬 34</span>
+                </div>
+            </div>
+
+            <!-- ===== 群友语录 ===== -->
+            <h2 class="section-title" id="group" style="text-align: left;">
+                <span class="emoji-badge badge-fun">👥</span>
+                群友语录
+            </h2>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    我喜欢瑜伽裤，就像喜欢落日和晚风一样。这是审美，不是性癖。
+                </div>
+                <div class="quote-author">—— 群友 A</div>
+                <div class="quote-source">来自：瑜伽裤百科群聊</div>
+                <div class="quote-actions">
+                    <span>❤️ 128</span>
+                    <span>💬 23</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    第一次穿 Align 的时候，我惊了——原来裤子可以做到像没穿一样舒服。这不是性癖，这是科技。
+                </div>
+                <div class="quote-author">—— 群友 B</div>
+                <div class="quote-source">来自：瑜伽裤百科群聊</div>
+                <div class="quote-actions">
+                    <span>❤️ 98</span>
+                    <span>💬 15</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    群主建了这个站之后，我反而开始怀疑了——你这么认真搞这个，到底是不是性癖？
+                </div>
+                <div class="quote-author">—— 群友 C（被群主禁言 10 分钟）</div>
+                <div class="quote-source">来自：瑜伽裤百科群聊 · 名场面</div>
+                <div class="quote-actions">
+                    <span>❤️ 256</span>
+                    <span>💬 67</span>
+                    <span style="color: var(--pink);">📌 名场面</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    我女朋友的瑜伽裤比我的牛仔裤还多，衣柜里半壁江山都是。我支持她——因为我也爱看。
+                </div>
+                <div class="quote-author">—— 群友 E（诚实版）</div>
+                <div class="quote-source">来自：瑜伽裤百科群聊</div>
+                <div class="quote-actions">
+                    <span>❤️ 312</span>
+                    <span>💬 89</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    男穿瑜伽裤怎么了？舒服就是正义。不过……选黑色比较安全。
+                </div>
+                <div class="quote-author">—— 群友 D（男）</div>
+                <div class="quote-source">来自：瑜伽裤百科群聊</div>
+                <div class="quote-actions">
+                    <span>❤️ 167</span>
+                    <span>💬 45</span>
+                </div>
+            </div>
+
+            <!-- ===== 名人名言 ===== -->
+            <h2 class="section-title" id="famous" style="text-align: left;">
+                <span class="emoji-badge badge-serious">🌟</span>
+                名人名言
+            </h2>
+
+            <div class="quote-card serious">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    I believe in pushing yourself to the limit and then some.
+                    And I do that in my Lululemons.
+                </div>
+                <div class="quote-author" style="margin-bottom: 4px;">—— 未知健身博主</div>
+                <div class="quote-source">中文大意：我相信把自己推到极限，穿着 Lululemon 做到这一点。</div>
+                <div class="quote-tags">
+                    <span class="tag tag-serious">英文原文</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 89</span>
+                    <span>💬 12</span>
+                </div>
+            </div>
+
+            <div class="quote-card serious">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    Yoga is not about touching your toes. It's about what you learn on the way down.
+                    And yoga pants are about looking good while doing it.
+                </div>
+                <div class="quote-author" style="margin-bottom: 4px;">—— 网络改编版</div>
+                <div class="quote-source">
+                    原版（Jigar Gor）：Yoga is not about touching your toes. It's about what you learn on the way down.<br>
+                    后半句是我们加的 😎
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 134</span>
+                    <span>💬 28</span>
+                </div>
+            </div>
+
+            <!-- ===== 网络名场面 ===== -->
+            <h2 class="section-title" id="internet" style="text-align: left;">
+                <span class="emoji-badge badge-fun">🌐</span>
+                网络名场面
+            </h2>
+
+            <div class="quote-card hot">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    2013 年：有人贴告示禁止穿瑜伽裤出门<br>
+                    2024 年：穿瑜伽裤上班、开会、见家长<br>
+                    历史证明：有些禁令的唯一作用，就是让你发现它有多荒谬。
+                </div>
+                <div class="quote-author">—— 互联网考古学家</div>
+                <div class="quote-tags">
+                    <span class="tag tag-hot">🔥 考古名场面</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 567</span>
+                    <span>💬 78</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    如何判断一条瑜伽裤的质量？<br>
+                    —— 看它能不能陪你从瑜伽垫走到火锅店，而不让你后悔。
+                </div>
+                <div class="quote-author">—— 小红书热门评论</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">人间真实</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 678</span>
+                    <span>💬 92</span>
+                </div>
+            </div>
+
+            <div class="quote-card fun">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    如果你穿了瑜伽裤还觉得不舒服——<br>
+                    那说明你买错码了。<br>
+                    不是瑜伽裤的问题，是你和它之间缺乏信任。
+                </div>
+                <div class="quote-author">—— 某知乎回答</div>
+                <div class="quote-tags">
+                    <span class="tag tag-fun">话糙理不糙</span>
+                </div>
+                <div class="quote-actions">
+                    <span>❤️ 234</span>
+                    <span>💬 34</span>
+                </div>
+            </div>
+
+            <!-- ===== 投稿区（交互版） ===== -->
+            <div id="submit" style="background: linear-gradient(135deg, #f0e6f6, #e8f0fe); border-radius: 20px; padding: 36px; margin: 40px 0; border: 2px solid #d4c8e0;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h3 style="font-size: 22px; color: #4a2d6e;">📢 投稿你的语录</h3>
+                    <p style="color: #6d4e8a; font-size: 14px; margin-top: 4px;">匿名的 · 投稿后立刻显示 · 群友都能看到</p>
+                </div>
+
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 600; color: #4a2d6e; margin-bottom: 6px;">你的昵称（选填，不填则显示"匿名群友"）</label>
+                        <input type="text" id="quoteName" placeholder="留空则显示为匿名群友"
+                            style="width: 100%; padding: 12px 16px; border: 2px solid #d4c8e0; border-radius: 12px; font-size: 15px; outline: none; transition: border-color 0.2s; background: #fff;"
+                            onfocus="this.style.borderColor='#9b59b6'" onblur="this.style.borderColor='#d4c8e0'">
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 600; color: #4a2d6e; margin-bottom: 6px;">你的语录 *</label>
+                        <textarea id="quoteText" rows="3" placeholder="写一句关于瑜伽裤的话...可以是正经感悟，也可以是整活段子"
+                            style="width: 100%; padding: 12px 16px; border: 2px solid #d4c8e0; border-radius: 12px; font-size: 15px; resize: vertical; outline: none; transition: border-color 0.2s; background: #fff; font-family: inherit;"
+                            onfocus="this.style.borderColor='#9b59b6'" onblur="this.style.borderColor='#d4c8e0'"></textarea>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 14px; font-weight: 600; color: #4a2d6e; margin-bottom: 6px;">分类</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #fff; border: 2px solid #d4c8e0; border-radius: 10px; cursor: pointer; transition: all 0.15s; font-size: 14px;">
+                                <input type="radio" name="quoteType" value="正经" checked style="accent-color: #9b59b6;"> 🏛️ 正经感悟
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: #fff; border: 2px solid #d4c8e0; border-radius: 10px; cursor: pointer; transition: all 0.15s; font-size: 14px;">
+                                <input type="radio" name="quoteType" value="整活" style="accent-color: #e67e22;"> 😂 整活段子
+                            </label>
+                        </div>
+                    </div>
+                    <button onclick="submitQuote()"
+                        style="width: 100%; padding: 14px; background: linear-gradient(135deg, #9b59b6, #8e44ad); color: #fff; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155,89,182,0.4)'"
+                        onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                        📤 匿名投稿
+                    </button>
+                    <p id="submitMsg" style="text-align: center; margin-top: 8px; font-size: 14px; color: #888; display: none;"></p>
+                </div>
+            </div>
+
+            <!-- ===== 群友已投 ===== -->
+            <div id="submitted">
+                <h2 class="section-title" style="text-align: left; padding-top: 0;">
+                    <span class="emoji-badge badge-fun">📨</span>
+                    群友已投 · <span id="countDisplay">0</span> 条
+                </h2>
+                <div id="submittedList"></div>
+                <div id="emptyMsg" style="text-align: center; padding: 40px; color: #888; font-size: 15px; border: 2px dashed #ddd; border-radius: 16px;">
+                    🫣 还没有人投稿<br>
+                    要不……你先来一条？
+                </div>
+            </div>
+
+        </div><!-- /main-content -->
+    </div><!-- /content-layout -->
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>🧘‍♀️ 瑜伽裤百科 · 语录 · 总有一句说中你</p>
+        <div class="disclaimer">
+            部分语录来源于网络公开内容，版权归原作者所有。<br>
+            群友语录已获授权发布（或者他们不知道，但我们希望他们会同意）。
+        </div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// 回到顶部
+window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
+
+// ===== 语录投稿系统（纯前端版 · 数据存在浏览器本地） =====
+const STORAGE_KEY = 'yugaku_quotes';
+
+// 加载已保存的语录
+function loadQuotes() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch { return []; }
+}
+
+// 保存语录
+function saveQuotes(quotes) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(quotes));
+}
+
+// 渲染语录列表
+function renderQuotes() {
+    const list = document.getElementById('submittedList');
+    const empty = document.getElementById('emptyMsg');
+    const count = document.getElementById('countDisplay');
+    const quotes = loadQuotes();
+
+    count.textContent = quotes.length;
+
+    if (quotes.length === 0) {
+        if (list) list.innerHTML = '';
+        if (empty) empty.style.display = 'block';
+        return;
+    }
+    if (empty) empty.style.display = 'none';
+
+    list.innerHTML = quotes.map((q, i) => `
+        <div class="quote-card ${q.type === '正经' ? 'serious' : 'fun'}">
+            <div class="quote-mark">"</div>
+            <div class="quote-text">${escapeHtml(q.text)}</div>
+            <div class="quote-author">—— ${escapeHtml(q.nickname)}</div>
+            <div class="quote-source">
+                群友投稿 · ${new Date(q.time).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                ${q.type === '正经' ? '· 🏛️ 正经' : '· 😂 整活'}
+            </div>
+            <div class="quote-tags">
+                <span style="background: #fff3cd; color: #856404; font-size: 11px; padding: 2px 8px; border-radius: 4px;">📝 待审核</span>
+            </div>
+            <div class="quote-actions">
+                <span onclick="likeQuote(${i})" style="cursor: pointer;">❤️ <span class="like-count">${q.likes || 0}</span></span>
+                <span style="color: #aaa;">💬 可评论</span>
+                <span onclick="deleteQuote(${i})" style="cursor: pointer; color: #e74c3c;">🗑️ 删除</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// HTML 转义防 XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// 提交新语录
+function submitQuote() {
+    const nameInput = document.getElementById('quoteName');
+    const textInput = document.getElementById('quoteText');
+    const msgEl = document.getElementById('submitMsg');
+    const typeEl = document.querySelector('input[name="quoteType"]:checked');
+
+    const text = textInput.value.trim();
+    if (!text) {
+        msgEl.style.display = 'block';
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 写点内容再投稿吧！';
+        return;
+    }
+    if (text.length < 4) {
+        msgEl.style.display = 'block';
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 太短了，多写几个字呗～';
+        return;
+    }
+    if (text.length > 500) {
+        msgEl.style.display = 'block';
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 太长了，控制在 500 字以内哦';
+        return;
+    }
+
+    const nickname = nameInput.value.trim() || '匿名群友';
+    const type = typeEl ? typeEl.value : '整活';
+
+    const quotes = loadQuotes();
+    quotes.unshift({  // 新的排前面
+        nickname: nickname,
+        text: text,
+        type: type,
+        time: Date.now(),
+        likes: 0
+    });
+    saveQuotes(quotes);
+
+    // 清空表单
+    textInput.value = '';
+    nameInput.value = '';
+
+    // 成功提示
+    msgEl.style.display = 'block';
+    msgEl.style.color = '#27ae60';
+    msgEl.textContent = '✅ 投稿成功！语录已出现在下方列表中 🎉';
+    setTimeout(() => { msgEl.style.display = 'none'; }, 3000);
+
+    renderQuotes();
+}
+
+// 点赞
+function likeQuote(index) {
+    const quotes = loadQuotes();
+    if (quotes[index]) {
+        quotes[index].likes = (quotes[index].likes || 0) + 1;
+        saveQuotes(quotes);
+        renderQuotes();
+    }
+}
+
+// 删除（每个人都有删除自己发送的权限）
+function deleteQuote(index) {
+    if (!confirm('确定删除这条语录吗？')) return;
+    const quotes = loadQuotes();
+    quotes.splice(index, 1);
+    saveQuotes(quotes);
+    renderQuotes();
+}
+
+// 页面加载时渲染
+document.addEventListener('DOMContentLoaded', renderQuotes);
+</script>
+
+</body>
+</html>
