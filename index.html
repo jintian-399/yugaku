@@ -4,190 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>瑜伽裤百科</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* ===== 高级首页专属样式 ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans SC', system-ui, sans-serif; background: #0a0a12; color: #fff; overflow-x: hidden; min-height: 100vh; }
+        body { font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; background: #0a0a12; color: #fff; }
 
-        /* ===== Hero 全屏 ===== */
-        .hero {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 40px 24px; position: relative;
-            background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 40%, #0f3460 70%, #0a0a12 100%);
-            overflow: hidden;
+        /* ===== 背景 ===== */
+        /* ★ 在这里换图片：把下面 url() 里的链接换成你的图片地址即可 */
+        .bg {
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                linear-gradient(180deg, rgba(10,10,18,0.3) 0%, rgba(10,10,18,0.85) 100%),
+                url('https://images.unsplash.com/photo-1518314911005-7db3f9d0e7c0?w=1920&q=80') center/cover no-repeat;
         }
-        /* 背景装饰光晕 */
-        .hero::before {
-            content: ''; position: absolute; top: -30%; left: -20%; width: 140%; height: 140%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(233,69,96,0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 50%, rgba(245,166,35,0.06) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        /* 背景网格纹理 */
-        .hero::after {
-            content: ''; position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-        }
+        /* 如果用本地图片，改成：
+           background: linear-gradient(180deg, rgba(10,10,18,0.3) 0%, rgba(10,10,18,0.85) 100%),
+                       url('./karina.jpg') center/cover no-repeat;
+        */
 
-        .hero-content { position: relative; z-index: 2; max-width: 800px; }
-        .hero-badge {
+        /* ===== 内容 ===== */
+        .content { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; }
+
+        .badge {
             display: inline-block; padding: 6px 20px; border-radius: 40px;
-            background: rgba(233,69,96,0.15); border: 1px solid rgba(233,69,96,0.25);
-            color: #e94560; font-size: 13px; font-weight: 600; letter-spacing: 2px;
-            margin-bottom: 24px; backdrop-filter: blur(10px);
-        }
-        .hero h1 {
-            font-size: clamp(42px, 8vw, 80px); font-weight: 900; letter-spacing: -2px;
-            line-height: 1.05; margin-bottom: 16px;
-        }
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, #e94560, #f5a623, #e94560);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 4s ease-in-out infinite;
-        }
-        @keyframes shimmer { 0%,100%{background-position:0%} 50%{background-position:100%} }
-        .hero p {
-            font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.5);
-            line-height: 1.7; max-width: 560px; margin: 0 auto 40px; font-weight: 300;
-        }
-        .hero-tagline {
-            font-size: 14px; color: rgba(255,255,255,0.2);
-            letter-spacing: 4px; text-transform: uppercase; margin-top: 40px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 3px;
+            margin-bottom: 24px; backdrop-filter: blur(20px);
         }
 
-        /* ===== 三入口卡片 ===== */
-        .cards-section {
-            position: relative; z-index: 2; margin-top: -80px; padding: 0 24px 80px;
+        h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; margin-bottom: 12px; }
+        h1 .gradient {
+            background: linear-gradient(135deg, #e94560, #f5a623);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .cards-grid {
-            max-width: 1100px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+
+        .sub {
+            font-size: clamp(14px, 1.5vw, 17px); color: rgba(255,255,255,0.35);
+            line-height: 1.7; max-width: 480px; margin: 0 auto 40px; font-weight: 300;
         }
-        .nav-card {
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06); border-radius: 24px;
-            padding: 40px 32px; text-decoration: none; color: #fff;
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        .tagline {
+            font-size: 13px; color: rgba(255,255,255,0.15); letter-spacing: 5px;
+            margin-top: 32px;
+        }
+
+        /* ===== 三入口 ===== */
+        .cards {
+            max-width: 900px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06); border-radius: 20px;
+            padding: 32px 24px; text-decoration: none; color: #fff;
+            transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
             position: relative; overflow: hidden;
         }
-        .nav-card::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(180deg, transparent 60%, rgba(255,255,255,0.03));
-            pointer-events: none;
-        }
-        .nav-card:hover {
-            transform: translateY(-8px); border-color: rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.06); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .nav-card:active { transform: translateY(-4px); }
-        .nav-card .icon { font-size: 36px; margin-bottom: 16px; display: block; }
-        .nav-card .num {
-            font-size: 12px; color: rgba(255,255,255,0.2); letter-spacing: 2px;
-            margin-bottom: 8px; font-weight: 500;
-        }
-        .nav-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
-        .nav-card p { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.7; font-weight: 300; }
-        .nav-card .arrow {
-            display: inline-block; margin-top: 16px; font-size: 14px;
-            color: rgba(255,255,255,0.2); transition: all 0.3s;
-        }
-        .nav-card:hover .arrow { color: #e94560; transform: translateX(6px); }
+        .card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .card .icon { font-size: 32px; margin-bottom: 12px; display: block; }
+        .card .num { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 2px; margin-bottom: 6px; }
+        .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+        .card p { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
+        .card .arrow { display: inline-block; margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.15); transition: all 0.3s; }
+        .card:hover .arrow { color: #e94560; transform: translateX(6px); }
 
-        .nav-card.accent-1:hover { border-color: rgba(233,69,96,0.3); }
-        .nav-card.accent-2:hover { border-color: rgba(245,166,35,0.3); }
-        .nav-card.accent-3:hover { border-color: rgba(155,89,182,0.3); }
+        .footer-p { text-align: center; padding: 32px 24px 40px; color: rgba(255,255,255,0.08); font-size: 12px; letter-spacing: 2px; position: relative; z-index: 1; }
 
-        /* ===== 分隔装饰 ===== */
-        .divider {
-            text-align: center; padding: 60px 24px 20px;
-            color: rgba(255,255,255,0.08); font-size: 13px; letter-spacing: 6px;
-        }
-
-        /* ===== 底部 ===== */
-        .footer-p {
-            text-align: center; padding: 40px 24px 48px;
-            color: rgba(255,255,255,0.15); font-size: 13px;
-        }
-        .footer-p a { color: rgba(255,255,255,0.25); text-decoration: none; }
-        .footer-p a:hover { color: rgba(255,255,255,0.4); }
-
-        /* ===== 响应式 ===== */
-        @media (max-width: 900px) {
-            .cards-grid { grid-template-columns: 1fr; max-width: 480px; gap: 16px; }
-            .cards-section { margin-top: -40px; padding-bottom: 40px; }
-            .nav-card { padding: 28px 24px; }
-            .hero h1 { font-size: 36px; }
-        }
-        @media (max-width: 480px) {
-            .nav-card h3 { font-size: 18px; }
-        }
-
-        /* ===== 浮动装饰粒子 ===== */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        .float-particle {
-            position: absolute; font-size: 20px; opacity: 0.03; pointer-events: none;
-            animation: float 8s ease-in-out infinite;
+        @media (max-width: 700px) {
+            .cards { grid-template-columns: 1fr; max-width: 380px; }
+            .card { padding: 24px 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="hero">
-    <!-- 背景装饰 -->
-    <div class="float-particle" style="top:15%;left:10%;animation-delay:0s;">🧘‍♀️</div>
-    <div class="float-particle" style="top:25%;right:15%;animation-delay:2s;font-size:28px;">🍑</div>
-    <div class="float-particle" style="bottom:30%;left:20%;animation-delay:4s;font-size:16px;">✨</div>
-    <div class="float-particle" style="bottom:20%;right:10%;animation-delay:1s;">💬</div>
+<div class="bg"></div>
 
-    <div class="hero-content">
-        <div class="hero-badge">始于 2026 · 一个群聊玩笑</div>
-        <h1>瑜伽裤<br><span class="highlight">百科</span></h1>
-        <p>一个集品牌科普、面料科学、选购指南与群友整活于一体的正经信息站</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <a href="guide.html" class="btn btn-primary">开始探索 →</a>
-        </div>
-        <div class="hero-tagline">认真科普 · 大胆整活 · 尊重审美</div>
-    </div>
-</div>
+<div class="content">
+    <div class="badge">始于 2026 · 一个群聊玩笑</div>
+    <h1>瑜伽裤 <span class="gradient">百科</span></h1>
+    <p class="sub">品牌科普 · 面料科学 · 选购指南 · 群友整活<br>一个正经（？）的信息站</p>
 
-<div class="cards-section">
-    <div class="cards-grid">
-        <a href="guide.html" class="nav-card accent-1">
+    <div class="cards">
+        <a href="guide.html" class="card">
             <span class="num">01</span>
             <span class="icon">📖</span>
             <h3>选购介绍</h3>
-            <p>品牌百科 · 面料实验室 · 选购指南 · 养护秘籍<br>—— 正经科普区</p>
+            <p>品牌 · 面料 · 选购 · 养护</p>
             <span class="arrow">→ 进入</span>
         </a>
-        <a href="fun.html" class="nav-card accent-2">
+        <a href="fun.html" class="card">
             <span class="num">02</span>
             <span class="icon">😂</span>
             <h3>整活区</h3>
-            <p>透不透实验室 · 编年史 · 梗图 · 发疯评论区<br>—— 来都来了</p>
+            <p>投票 · 编年史 · 梗图 · 发疯</p>
             <span class="arrow">→ 进入</span>
         </a>
-        <a href="quotes.html" class="nav-card accent-3">
+        <a href="quotes.html" class="card">
             <span class="num">03</span>
             <span class="icon">💬</span>
             <h3>语录区</h3>
-            <p>群友投稿 · 金句排行 · 讨论留言<br>—— 总有一句说中你</p>
+            <p>投稿 · 金句 · 讨论留言</p>
             <span class="arrow">→ 进入</span>
         </a>
     </div>
+
+    <div class="tagline">认真科普 · 大胆整活 · 尊重审美</div>
 </div>
 
-<div class="divider">· · ·</div>
-
-<div class="footer-p">
-    <a href="https://yugaku.online">yugaku.online</a> · 始于一个群聊玩笑 · 认真就赢了
-</div>
+<div class="footer-p">YUGAKU.ONLINE</div>
 
 </body>
 </html>
