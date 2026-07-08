@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>讨论区 — 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .forum-header {
+            text-align: center; padding: 16px 0 32px;
+        }
+        .forum-header h2 { font-size: 28px; }
+
+        .category-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px; margin: 24px 0;
+        }
+        .category-card {
+            background: #fff; border-radius: 16px; padding: 24px;
+            border: 1px solid var(--border); transition: all 0.25s;
+            cursor: pointer;
+        }
+        .category-card:hover {
+            transform: translateY(-3px); box-shadow: var(--shadow-hover);
+            border-color: #ddd;
+        }
+        .category-card .icon { font-size: 36px; margin-bottom: 8px; }
+        .category-card h3 { font-size: 17px; margin-bottom: 4px; }
+        .category-card p { font-size: 13px; color: var(--text-light); }
+        .category-card .count { font-size: 12px; color: #aaa; margin-top: 8px; }
+
+        .topic-list { margin: 32px 0; }
+        .topic-item {
+            background: #fff; border-radius: 12px; padding: 16px 20px;
+            border: 1px solid var(--border); margin-bottom: 10px;
+            transition: all 0.15s; display: flex; justify-content: space-between;
+            align-items: center; gap: 12px;
+        }
+        .topic-item:hover { border-color: #ddd; box-shadow: var(--shadow-sm); }
+        .topic-item .topic-title { font-weight: 500; font-size: 15px; }
+        .topic-item .topic-meta { font-size: 12px; color: #aaa; white-space: nowrap; }
+        .topic-item .topic-badge {
+            font-size: 11px; padding: 2px 8px; border-radius: 6px;
+            background: var(--tag-fun-bg); color: var(--tag-fun-text); margin-right: 8px;
+        }
+
+        .giscus-section {
+            background: #fff; border-radius: 20px; padding: 32px;
+            border: 1px solid var(--border); margin: 40px 0;
+        }
+        .giscus-section h3 { font-size: 20px; margin-bottom: 4px; }
+        .giscus-section p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; }
+
+        .goto-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 24px; border-radius: 40px; font-weight: 600; font-size: 14px;
+            background: var(--blue-dark); color: #fff; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .goto-btn:hover { background: var(--blue-darker); transform: translateY(-2px); text-decoration: none; color: #fff; }
+
+        .empty-topics { text-align: center; padding: 40px; color: #888; }
+
+        .discuss-banner {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-darker));
+            color: #fff; border-radius: 20px; padding: 32px; text-align: center; margin: 24px 0;
+        }
+        .discuss-banner h3 { font-size: 20px; margin-bottom: 4px; }
+        .discuss-banner p { color: #99aabb; font-size: 14px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo"><a href="index.html">🧘‍♀️ 瑜伽裤百科</a><span class="subtitle">· 讨论区</span></div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌库</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">💬 语录</a>
+            <a href="forum.html" class="active">💭 讨论区</a>
+            <a href="crazy.html">🤪 疯人院</a>
+            <a href="fun.html">🏆 整活区</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-hero">
+    <div class="container">
+        <h1>💭 讨论区</h1>
+        <p>分话题讨论 · 需要 GitHub 账号参与 · 自由发言</p>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- ===== 分类板块 ===== -->
+    <div class="forum-header">
+        <h2>📂 话题分类</h2>
+        <p>选择一个话题参与讨论</p>
+    </div>
+
+    <div class="category-grid">
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/瑜伽裤推荐" target="_blank" class="category-card" style="text-decoration:none;color:inherit;">
+            <div class="icon">🛍️</div>
+            <h3>瑜伽裤推荐</h3>
+            <p>买哪条好？哪个品牌性价比高？</p>
+            <div class="count">发帖求推荐</div>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/穿搭分享" target="_blank" class="category-card" style="text-decoration:none;color:inherit;">
+            <div class="icon">👗</div>
+            <h3>穿搭分享</h3>
+            <p>日常搭配、健身房穿搭、街拍灵感</p>
+            <div class="count">晒出你的搭配</div>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/面料研究所" target="_blank" class="category-card" style="text-decoration:none;color:inherit;">
+            <div class="icon">🔬</div>
+            <h3>面料研究所</h3>
+            <p>Nulu 为什么起球？锦纶66好在哪？</p>
+            <div class="count">技术向讨论</div>
+        </a>
+        <a href="https://github.com/jintian-399/yugaku/discussions/categories/整活闲聊" target="_blank" class="category-card" style="text-decoration:none;color:inherit;">
+            <div class="icon">🤪</div>
+            <h3>整活闲聊</h3>
+            <p>什么都能聊，不限于瑜伽裤</p>
+            <div class="count">随意发疯区</div>
+        </a>
+    </div>
+
+    <!-- ===== 最新讨论 ===== -->
+    <div class="topic-list">
+        <h3 style="margin-bottom: 16px;">📌 最新讨论</h3>
+        <div id="topicList">
+            <div class="empty-topics">
+                <p>⏳ 正在加载讨论内容...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 去 GitHub 发帖 ===== -->
+    <div class="discuss-banner">
+        <h3>💬 想参与讨论？</h3>
+        <p>去 GitHub Discussions 发帖或回复，需要 GitHub 账号</p>
+        <a href="https://github.com/jintian-399/yugaku/discussions" target="_blank" class="goto-btn">
+            🚀 前往讨论区
+        </a>
+    </div>
+
+    <!-- ===== 页面评论区（Giscus） ===== -->
+    <div class="giscus-section">
+        <h3>💬 留言板</h3>
+        <p>对本页面的想法 · 用 GitHub 账号登录后留言</p>
+        <div id="giscus-comments">
+            <p style="color:#888;font-size:14px;text-align:center;padding:20px;">
+                ⏳ 评论组件加载中...
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>💭 瑜伽裤百科 · 讨论区 · 友好交流</p>
+        <div class="disclaimer">
+            讨论区需 GitHub 账号登录。请遵守基本的网络礼仪，友善讨论。
+        </div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// 加载 GitHub Discussions 列表
+async function loadTopics() {
+    try {
+        const res = await fetch('https://api.github.com/repos/jintian-399/yugaku/discussions?per_page=10');
+        if (!res.ok) throw new Error('状态: ' + res.status);
+        const data = await res.json();
+
+        const list = document.getElementById('topicList');
+        if (!data || data.length === 0) {
+            list.innerHTML = '<div class="empty-topics"><p>📭 还没有讨论，去发起第一个话题吧！</p></div>';
+            return;
+        }
+        list.innerHTML = data.map(t => `
+            <a href="${t.html_url}" target="_blank" style="text-decoration:none;color:inherit;">
+                <div class="topic-item">
+                    <div>
+                        <span class="topic-badge">${t.category?.name || '闲聊'}</span>
+                        <span class="topic-title">${t.title}</span>
+                    </div>
+                    <div class="topic-meta">
+                        💬 ${t.comments || 0} · ${new Date(t.created_at).toLocaleDateString('zh-CN')}
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    } catch (e) {
+        document.getElementById('topicList').innerHTML = `
+            <div class="empty-topics">
+                <p>💡 还没有讨论内容</p>
+                <p style="font-size:13px;margin-top:4px;">去 GitHub 发起第一个话题吧！</p>
+            </div>`;
+    }
+}
+
+loadTopics();
+
+// 回到顶部
+window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
+</script>
+<script src="https://giscus.app/client.js"
+    data-repo="jintian-399/yugaku"
+    data-repo-id=""
+    data-category="Announcements"
+    data-category-id=""
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+</script>
+
+</body>
+</html>
