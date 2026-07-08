@@ -8,18 +8,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; background: #0a0a12; color: #fff; }
 
-        /* ===== 背景 ===== */
-        /*
-            ★ 换图片方法：
-            把你喜欢的柳智敏图片链接替换下面的 url() 即可。
-            如果不方便传图，也可以告诉我图片链接我来帮你换。
-        */
         .bg {
             position: fixed; inset: 0; z-index: 0;
             background:
-                linear-gradient(180deg, rgba(10,10,18,0.25) 0%, rgba(10,10,18,0.8) 100%),
-                url('https://images.unsplash.com/photo-1518314911005-7db3f9d0e7c0?w=1920&q=80') center/cover no-repeat;
-            filter: blur(3px);
+                linear-gradient(180deg, rgba(10,10,18,0.2) 0%, rgba(10,10,18,0.75) 100%),
+                url('https://images.unsplash.com/photo-1544502062-f82887f03d1c?w=1920&q=80') center/cover no-repeat;
+            filter: blur(4px);
             transform: scale(1.05);
         }
 
@@ -34,8 +28,8 @@
         .tagline { font-size: 13px; color: rgba(255,255,255,0.15); letter-spacing: 5px; margin-top: 32px; }
 
         .cards { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
-        .card { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px 24px; text-decoration: none; color: #fff; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .card { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px 24px; text-decoration: none; color: #fff; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
         .card .icon { font-size: 32px; margin-bottom: 12px; display: block; }
         .card .num { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 2px; margin-bottom: 6px; }
         .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
