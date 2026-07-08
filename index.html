@@ -43,7 +43,9 @@
     </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
-<!-- 登录弹窗（直接内嵌，不依赖 JS 创建） -->
+</head>
+<body>
+<!-- 登录弹窗 -->
 <div id="loginModal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);" onclick="this.style.display='none'">
     <div onclick="event.stopPropagation()" style="background:#fff;border-radius:20px;padding:32px;max-width:400px;width:90%;margin:10vh auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);box-sizing:border-box;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
@@ -61,8 +63,6 @@
         </div>
     </div>
 </div>
-</head>
-<body>
 <div class="bg"></div>
 <div class="content">
     <div style="position:fixed;top:20px;right:24px;z-index:10;">
