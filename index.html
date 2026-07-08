@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>瑜伽裤百科</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; color: #fff; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
@@ -39,10 +41,19 @@
 
         @media (max-width: 700px) { .cards { grid-template-columns: 1fr; max-width: 380px; } .card { padding: 24px 20px; } }
     </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 <div class="bg"></div>
 <div class="content">
+    <div style="position:fixed;top:20px;right:24px;z-index:10;">
+        <span class="login-btn" id="loginBtn" onclick="showLoginModal()">🔐 登录</span>
+        <div class="user-menu" id="userMenu" onclick="logout()" title="点击退出" style="display:none;">
+            <div class="user-avatar" id="userAvatar">?</div>
+            <span class="user-name" id="userName">用户</span>
+        </div>
+    </div>
     <div class="badge">始于 2026 · 一个群聊玩笑</div>
     <h1>瑜伽裤 <span class="g">百科</span></h1>
     <p class="sub">品牌科普 · 面料科学 · 选购指南 · 群友整活</p>
