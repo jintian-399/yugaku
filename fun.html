@@ -59,14 +59,9 @@
         </div>
         <nav class="nav">
             <a href="index.html">首页</a>
-            <a href="brands.html">品牌库</a>
-            <a href="fabric-lab.html">面料实验室</a>
-            <a href="guide.html">选购指南</a>
-            <a href="care.html">养护秘籍</a>
+            <a href="guide.html">📖 选购介绍</a>
+            <a href="fun.html" class="active">😂 整活区</a>
             <a href="quotes.html">💬 语录</a>
-            <a href="forum.html">💭 讨论区</a>
-            <a href="crazy.html">🤪 疯人院</a>
-            <a href="fun.html" class="active">🏆 整活区</a>
         </nav>
     </div>
 </header>
@@ -458,6 +453,39 @@
 
 </div>
 
+<!-- ===== 发疯评论区 ===== -->
+<div style="background: linear-gradient(135deg, #1a1a2e, #2d1b4e); padding: 48px 0; margin: 40px 0; color: #fff;">
+    <div class="container">
+        <div style="text-align:center;margin-bottom:24px;">
+            <span class="tag tag-hot" style="font-size:14px;padding:4px 16px;">🤪 发疯评论区</span>
+            <p style="color:#99aabb;margin-top:8px;">匿名 · 随便说 · 发完就跑</p>
+        </div>
+        <div style="max-width:700px;margin:0 auto;background:rgba(255,255,255,0.04);border-radius:20px;padding:24px;border:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+                <input type="text" id="crazyName" placeholder="你的疯名（匿名野人）" maxlength="20" style="flex:1;min-width:120px;padding:10px 14px;border-radius:10px;border:none;font-size:14px;background:rgba(255,255,255,0.08);color:#fff;outline:none;">
+                <select id="crazyMood" style="padding:10px 14px;border-radius:10px;border:none;font-size:14px;background:rgba(255,255,255,0.08);color:#ccd6e0;outline:none;">
+                    <option value="😎">😎 正常</option><option value="🤪">🤪 发疯</option>
+                    <option value="🔥">🔥 暴躁</option><option value="💀">💀 摆烂</option><option value="🧘">🧘 贤者</option>
+                </select>
+            </div>
+            <textarea id="crazyText" rows="2" placeholder="写点什么… 关于瑜伽裤，或者单纯发疯" style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:14px;background:rgba(255,255,255,0.08);color:#fff;resize:vertical;font-family:inherit;outline:none;"></textarea>
+            <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('😂')">😂</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('🤪')">🤪</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('🔥')">🔥</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('💀')">💀</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('🍑')">🍑</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('🫣')">🫣</span>
+                <span style="cursor:pointer;font-size:20px;padding:2px 6px;" onclick="ci('😈')">😈</span>
+                <button onclick="sendCrazy()" style="margin-left:auto;padding:8px 24px;border:none;border-radius:40px;background:linear-gradient(135deg,#e94560,#f5a623);color:#fff;font-weight:700;font-size:14px;cursor:pointer;">🤪 发疯</button>
+            </div>
+            <p id="crazyMsg" style="text-align:center;font-size:13px;color:#8899aa;margin-top:8px;display:none;"></p>
+        </div>
+        <div id="crazyList" style="max-width:700px;margin:20px auto 0;display:flex;flex-direction:column;gap:10px;"></div>
+        <div id="crazyEmpty" style="text-align:center;padding:20px;color:#667788;border:2px dashed rgba(255,255,255,0.05);border-radius:16px;">🫥 还没有疯言疯语……来当第一个发疯的人</div>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="container">
         <p>🧘‍♀️ 瑜伽裤百科 · 整活区 · 笑就完事了 🍑</p>
@@ -473,14 +501,40 @@
 <script>
 window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
 
+document.querySelectorAll('.vote-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected')); this.classList.add('selected'); }); });
 
-    // 纯装饰性代码：让页面有点交互感
-    document.querySelectorAll('.vote-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
-            this.classList.add('selected');
-        });
-    });
+// ===== 发疯评论区 =====
+const CRAZY_KEY = 'yugaku_crazy';
+const CRAZY_MSGS = ['穿瑜伽裤的才是人上人 🙏','我今天又买了一条黑色的 这是第五条了 我觉得很正常','深蹲透不透 这是个哲学问题','align的触感像婴儿的屁股','穿了一次就回不去了 牛仔裤是什么 不熟','这网站真他妈是个快乐源泉 😭','他们说是性癖 我说是信仰 🙏','我在这个网站花的时间比上班还认真 💀'];
+
+function loadCrazy() { try { return JSON.parse(localStorage.getItem(CRAZY_KEY)) || []; } catch(e) { return []; } }
+function saveCrazy(q) { localStorage.setItem(CRAZY_KEY, JSON.stringify(q)); }
+function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+function ci(e) { const ta=document.getElementById('crazyText'); ta.value+=e; ta.focus(); }
+
+function renderCrazy() {
+    const list=document.getElementById('crazyList'),empty=document.getElementById('crazyEmpty'),msgs=loadCrazy();
+    if(msgs.length===0) { list.innerHTML=''; if(empty)empty.style.display='block'; return; }
+    if(empty)empty.style.display='none';
+    list.innerHTML=msgs.slice(0,30).map((m,i)=>`
+        <div style="background:rgba(255,255,255,0.06);border-radius:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.06);animation:pop-in .3s ease-out;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#8899aa;margin-bottom:4px;">
+                <span>${escapeHtml(m.name||'匿名野人')} ${m.mood||''}</span>
+                <span>${new Date(m.time).toLocaleString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span>
+            </div>
+            <div style="font-size:14px;color:#e0d8d0;">${escapeHtml(m.text)}</div>
+        </div>
+    `).join('');
+}
+
+function sendCrazy() {
+    const text=document.getElementById('crazyText'),name=document.getElementById('crazyName'),msg=document.getElementById('crazyMsg'),mood=document.getElementById('crazyMood'),t=text.value.trim();
+    if(!t) { msg.style.display='block';msg.style.color='#e74c3c';msg.textContent='⚠️ 写点东西！';setTimeout(()=>msg.style.display='none',2000);return; }
+    const msgs=loadCrazy();msgs.unshift({name:name.value.trim()||'匿名野人',mood:mood.value,text:t,time:Date.now()});saveCrazy(msgs);
+    text.value='';msg.style.display='block';msg.style.color='#27ae60';msg.textContent='✅ 发疯成功！';setTimeout(()=>msg.style.display='none',1500);renderCrazy();
+}
+
+renderCrazy();
 </script>
 </body>
 </html>
