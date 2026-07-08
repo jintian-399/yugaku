@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>疯人�?�?瑜伽裤百�?/title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== 疯人院专属狂野样�?===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes rainbow {
+            0% { color: #e94560; }
+            20% { color: #f5a623; }
+            40% { color: #2ecc71; }
+            60% { color: #3498db; }
+            80% { color: #9b59b6; }
+            100% { color: #e94560; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes emoji-rain {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .rainbow-text { animation: rainbow 3s linear infinite; }
+        .shake { animation: shake 0.3s ease-in-out infinite; display: inline-block; }
+
+        .chaos-header {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e, #0f3460, #1a1a2e);
+            background-size: 400% 400%;
+            animation: shimmer 5s ease-in-out infinite;
+            color: #fff; padding: 60px 0 40px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .chaos-header::before {
+            content: '💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬';
+            position: absolute; top: -10px; left: 0; right: 0;
+            font-size: 20px; opacity: 0.1; white-space: nowrap;
+            animation: float 3s ease-in-out infinite;
+        }
+        .chaos-header h1 { font-size: 42px; }
+        .chaos-header .sub {
+            color: #99aabb; font-size: 15px; margin-top: 8px;
+        }
+        .chaos-header .crazy-btn {
+            display: inline-block; margin-top: 16px; padding: 8px 24px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px; color: #ccd6e0; font-size: 13px; cursor: pointer;
+            transition: all 0.15s;
+        }
+        .chaos-header .crazy-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .chat-container { max-width: 800px; margin: 0 auto; padding: 24px; }
+
+        /* ===== 发疯输入�?===== */
+        .chaos-input-area {
+            background: linear-gradient(135deg, #faf8f5, #fef9ef);
+            border-radius: 20px; padding: 24px; margin-bottom: 24px;
+            border: 2px solid #eee; position: relative;
+            transition: border-color 0.3s;
+        }
+        .chaos-input-area:focus-within {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(245,166,35,0.1);
+        }
+        .chaos-input-area .row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+        .chaos-input-area input, .chaos-input-area select {
+            padding: 10px 16px; border: 2px solid #ddd; border-radius: 12px;
+            font-size: 14px; outline: none; transition: border-color 0.2s; background: #fff;
+        }
+        .chaos-input-area input:focus, .chaos-input-area select:focus { border-color: var(--gold); }
+        .chaos-input-area input[type="text"] { flex: 1; min-width: 150px; }
+        .chaos-input-area textarea {
+            width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 12px;
+            font-size: 15px; resize: vertical; min-height: 60px; outline: none;
+            font-family: inherit; transition: border-color 0.2s; background: #fff;
+        }
+        .chaos-input-area textarea:focus { border-color: var(--gold); }
+
+        .chaos-input-area .toolbar {
+            display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+            margin-top: 10px;
+        }
+        .chaos-input-area .toolbar .emoji-btn {
+            font-size: 22px; cursor: pointer; padding: 4px 8px;
+            border-radius: 8px; transition: background 0.15s; user-select: none;
+        }
+        .chaos-input-area .toolbar .emoji-btn:hover { background: #eee; transform: scale(1.2); }
+        .chaos-input-area .toolbar .send-btn {
+            margin-left: auto; padding: 10px 28px; border: none; border-radius: 40px;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            background: linear-gradient(135deg, var(--pink), var(--gold));
+            color: #fff; transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .chaos-input-area .toolbar .send-btn:hover {
+            transform: scale(1.05); box-shadow: 0 4px 15px rgba(233,69,96,0.3);
+        }
+        .chaos-input-area .madness-meter {
+            display: flex; gap: 4px; align-items: center;
+            font-size: 12px; color: #aaa;
+        }
+        .chaos-input-area .madness-meter .bar {
+            width: 80px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;
+        }
+        .chaos-input-area .madness-meter .bar-fill {
+            height: 100%; width: 0%; background: linear-gradient(90deg, #2ecc71, var(--gold), var(--pink));
+            border-radius: 3px; transition: width 0.2s;
+        }
+
+        /* ===== 消息列表 ===== */
+        .msg-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .msg-card {
+            background: #fff; border-radius: 16px; padding: 16px 20px;
+            border: 1px solid #eee; animation: pop-in 0.3s ease-out;
+            transition: all 0.2s;
+        }
+        .msg-card:hover { border-color: #ddd; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+        .msg-card .msg-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 6px; font-size: 13px;
+        }
+        .msg-card .msg-author {
+            font-weight: 600; display: flex; align-items: center; gap: 6px;
+        }
+        .msg-card .msg-time { color: #aaa; font-size: 12px; }
+        .msg-card .msg-badge {
+            font-size: 11px; padding: 1px 8px; border-radius: 6px;
+            background: #f0f0f0; color: #888;
+        }
+        .msg-card .msg-content {
+            font-size: 15px; line-height: 1.6; word-break: break-word;
+        }
+        .msg-card .msg-content .big-emoji { font-size: 32px; }
+        .msg-card .msg-actions {
+            display: flex; gap: 16px; margin-top: 8px; font-size: 13px; color: #bbb;
+        }
+        .msg-card .msg-actions span { cursor: pointer; transition: color 0.15s; }
+        .msg-card .msg-actions span:hover { color: var(--pink); }
+        .msg-card .msg-actions .like-btn.liked { color: var(--pink); }
+        .msg-card .msg-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+
+        .msg-card.chaos-level-1 { border-left: 4px solid #2ecc71; }
+        .msg-card.chaos-level-2 { border-left: 4px solid var(--gold); }
+        .msg-card.chaos-level-3 { border-left: 4px solid var(--pink); animation: shake 0.5s ease-in-out; }
+        .msg-card.chaos-level-4 {
+            border-left: 4px solid var(--purple);
+            background: linear-gradient(135deg, #fef9ef, #f0e6f6);
+            animation: shake 0.3s ease-in-out infinite;
+        }
+
+        .floating-emojis { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9999; }
+        .floating-emojis .emoji-rain-item {
+            position: absolute; font-size: 24px; animation: emoji-rain 4s linear forwards;
+        }
+
+        .chaos-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px; margin-bottom: 20px;
+        }
+        .chaos-stats .stat {
+            background: #fff; border-radius: 12px; padding: 12px; text-align: center;
+            border: 1px solid #eee;
+        }
+        .chaos-stats .stat .num { font-size: 24px; font-weight: 800; }
+        .chaos-stats .stat .label { font-size: 12px; color: #888; }
+
+        .empty-chaos {
+            text-align: center; padding: 60px 20px; color: #888;
+            border: 2px dashed #ddd; border-radius: 16px;
+        }
+        .empty-chaos .big { font-size: 48px; margin-bottom: 12px; }
+
+        @media (max-width: 600px) {
+            .chaos-input-area .row { flex-direction: column; }
+            .chaos-input-area input[type="text"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧘‍♀�?瑜伽裤百�?/a>
+            <span class="subtitle">· 疯人�?🔞</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌�?/a>
+            <a href="fabric-lab.html">面料实验�?/a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">💬 语录</a>
+            <a href="fun.html">🏆 整活�?/a>
+            <a href="crazy.html" class="active">🤪 疯人�?/a>
+        </nav>
+    </div>
+</header>
+
+<section class="chaos-header">
+    <div class="container" style="position: relative; z-index: 1;">
+        <h1>🤪 <span class="rainbow-text">疯人�?/span></h1>
+        <div class="sub">
+            本区没有任何规则 · 匿名发疯 · 随地大小�?· 发完就跑<br>
+            瑜伽裤、人生、整活、表情包、AI 废话——什么都能刷 🚀
+        </div>
+        <div class="crazy-btn" onclick="triggerEmojiRain()">🎉 激活疯狂模�?/div>
+    </div>
+</section>
+
+<div class="chat-container">
+
+    <!-- ===== 统计 ===== -->
+    <div class="chaos-stats" id="statsArea">
+        <div class="stat"><div class="num" id="totalCount">0</div><div class="label">💬 总消�?/div></div>
+        <div class="stat"><div class="num" id="todayCount">0</div><div class="label">🔥 今日�?/div></div>
+        <div class="stat"><div class="num" id="chaosLevel">0</div><div class="label">💀 疯狂指数</div></div>
+        <div class="stat"><div class="num" id="topPoster">?</div><div class="label">👑 今天最�?/div></div>
+    </div>
+
+    <!-- ===== 发疯输入 ===== -->
+    <div class="chaos-input-area" id="inputArea">
+        <div class="row">
+            <input type="text" id="chaosName" placeholder="你的疯名（不填就是匿名野人）" maxlength="20">
+            <select id="chaosMood">
+                <option value="😎 正常">😎 正常</option>
+                <option value="🤪 发疯">🤪 发疯</option>
+                <option value="🔥 暴躁">🔥 暴躁</option>
+                <option value="🥰 花痴">🥰 花痴</option>
+                <option value="🧘 贤�?>🧘 贤�?/option>
+                <option value="💀 摆烂">💀 摆烂</option>
+                <option value="🤡 小丑">🤡 小丑</option>
+                <option value="👻 幽灵">👻 幽灵</option>
+            </select>
+        </div>
+        <textarea id="chaosText" placeholder="写点什么�?可以是关于瑜伽裤的，也可以只是单纯发�? rows="2" oninput="updateMadness()"></textarea>
+        <div class="toolbar">
+            <span class="emoji-btn" onclick="insertEmoji('😂')" title="😂">😂</span>
+            <span class="emoji-btn" onclick="insertEmoji('🤪')" title="🤪">🤪</span>
+            <span class="emoji-btn" onclick="insertEmoji('🔥')" title="🔥">🔥</span>
+            <span class="emoji-btn" onclick="insertEmoji('💀')" title="💀">💀</span>
+            <span class="emoji-btn" onclick="insertEmoji('🍑')" title="🍑">🍑</span>
+            <span class="emoji-btn" onclick="insertEmoji('🫣')" title="🫣">🫣</span>
+            <span class="emoji-btn" onclick="insertEmoji('😈')" title="😈">😈</span>
+            <span class="emoji-btn" onclick="insertEmoji('🤌')" title="🤌">🤌</span>
+            <span class="emoji-btn" onclick="insertEmoji('🧘‍♀�?)" title="🧘‍♀�?>🧘‍♀�?/span>
+            <span class="emoji-btn" onclick="insertEmoji('😭')" title="😭">😭</span>
+            <span class="emoji-btn" onclick="insertEmoji('💅')" title="💅">💅</span>
+            <span class="emoji-btn" onclick="insertEmoji('🫠')" title="🫠">🫠</span>
+            <div class="madness-meter">
+                <span id="madnessLabel">冷静</span>
+                <div class="bar"><div class="bar-fill" id="madnessBar"></div></div>
+            </div>
+            <button class="send-btn" onclick="sendChaos()">🤪 发疯</button>
+        </div>
+        <div id="sendMsg" style="text-align: center; margin-top: 8px; font-size: 13px; display: none;"></div>
+    </div>
+
+    <!-- ===== 消息列表 ===== -->
+    <div id="msgList" class="msg-list"></div>
+
+    <div id="emptyMsg" class="empty-chaos">
+        <div class="big">🫥</div>
+        <p>这里还是一片寂静…�?/p>
+        <p style="font-size: 13px; margin-top: 4px;">第一条疯言疯语，由你来创�?🚀</p>
+    </div>
+
+    <!-- ===== 狂野按钮�?===== -->
+    <div style="display: flex; gap: 10px; justify-content: center; margin: 24px 0; flex-wrap: wrap;">
+        <button onclick="sendRandomChaos()" style="padding: 10px 24px; border: 2px dashed var(--gold); border-radius: 40px; background: #fff8e1; color: #856404; font-size: 14px; cursor: pointer; transition: all 0.15s;"
+            onmouseover="this.style.background='#fef3cd'" onmouseout="this.style.background='#fff8e1'">
+            🎲 随机发疯
+        </button>
+        <button onclick="triggerEmojiRain()" style="padding: 10px 24px; border: 2px dashed var(--purple); border-radius: 40px; background: #f0e6f6; color: #7b1fa2; font-size: 14px; cursor: pointer; transition: all 0.15s;"
+            onmouseover="this.style.background='#e8d5f0'" onmouseout="this.style.background='#f0e6f6'">
+            🌈 emoji 暴雨
+        </button>
+        <button onclick="clearAll()" style="padding: 10px 24px; border: 2px dashed #e74c3c; border-radius: 40px; background: #fde8e8; color: #c0392b; font-size: 14px; cursor: pointer; transition: all 0.15s;"
+            onmouseover="this.style.background='#fdd0d0'" onmouseout="this.style.background='#fde8e8'">
+            💣 清空疯人�?        </button>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>🤪 瑜伽裤百�?· 疯人�?· 发疯无罪 · 整活有理</p>
+        <div class="disclaimer">
+            疯人院所有内容均为群友自发创作，不代表本站立场�?br>
+            如果你在这里看到了什么离谱的东西——说明你来对地方了�?        </div>
+    </div>
+</footer>
+
+<!-- ===== 浮动 emoji 容器 ===== -->
+<div class="floating-emojis" id="emojiRain"></div>
+
+<script>
+// ===== 疯人院核心系�?=====
+const STORAGE = 'yugaku_crazy';
+const EMOJIS = ['😂','🤪','🔥','💀','🍑','🫣','😈','🤌','🧘‍♀�?,'💅','🫠','😭','🤡','👻','💪','🙈','🚀','🎉','💯','👀'];
+const RANDOM_MSGS = [
+    '穿瑜伽裤的才是人上人 🙏',
+    '我今天又买了一条黑色的 这是第五条了 我觉得很正常',
+    'Lululemon 什么时候给我打�?,
+    '深蹲透不�?这是个哲学问�?,
+    '我穿瑜伽裤不是为了健�?是为了下楼拿外卖的时候觉得自己很�?,
+    '我妈问我为什么每天都要穿这条裤子 我说你不�?,
+    ' align 的触感像婴儿的屁�?我认证过�?,
+    '有没有人团购 我想�?but 没钱',
+    '其实男人也穿瑜伽�?只是不敢�?🫣',
+    '穿了一次就回不去了 牛仔裤是什�?不熟',
+    '我就蹭蹭不买 结果买了四条',
+    '这网站真他妈是个快乐源泉 😭',
+    '我是�?我在�?我为什么在发疯',
+    '🫠 夏天穿瑜伽裤出门 走到半路感觉自己是一条行走的香肠',
+    '他们说是性癖 我说是信�?🙏',
+    '群主建这个站到底花了多少时间 你是不是不用上班�?,
+    '以后我的简历要写：精通瑜伽裤品鉴',
+    '买了一条白色的 还没敢穿出门 🫣',
+    '能不能出一个「透不透」实时检�?app',
+    '我在这个网站花的时间比上班还认真 💀',
+    '今天�?Align 去相亲了 对方也是�?Align 来的 结婚�?,
+    '被闺蜜安利了 MAIA 结果她穿 S 我穿 L 友尽',
+    '本来只想买一�?结果凑单凑了三条 这就是消费主义陷�?我跳�?,
+    '每次洗完澡站在衣柜前 手会自动伸向那条瑜伽�?,
+    '有没有人和我一�?在家也要穿着瑜伽裤睡觉的 🛌',
+    '我怀疑这个网站是我自己梦游的时候建�?,
+    '练瑜伽的时候：我是仙女 穿瑜伽裤的时候：我是仙女下凡',
+    '今天�?AI 帮我选瑜伽裤颜色 它选了荧光�?我把它删�?,
+    '破了洞的瑜伽裤还能穿�?在线�?�?,
+    '买了一条山�?Lulu 穿上去像绑了保鲜�?🤡',
+];
+
+// 加载消息
+function loadMsgs() {
+    try { return JSON.parse(localStorage.getItem(STORAGE)) || []; }
+    catch { return []; }
+}
+function saveMsgs(msgs) {
+    localStorage.setItem(STORAGE, JSON.stringify(msgs));
+}
+
+// 更新统计
+function updateStats() {
+    const msgs = loadMsgs();
+    document.getElementById('totalCount').textContent = msgs.length;
+
+    const today = new Date().toDateString();
+    const todayMsgs = msgs.filter(m => new Date(m.time).toDateString() === today);
+    document.getElementById('todayCount').textContent = todayMsgs.length;
+
+    const level = Math.min(10, Math.floor(msgs.length / 3));
+    document.getElementById('chaosLevel').textContent = level;
+
+    // 今天最活跃
+    const posters = {};
+    todayMsgs.forEach(m => {
+        const name = m.name || '匿名野人';
+        posters[name] = (posters[name] || 0) + 1;
+    });
+    const top = Object.entries(posters).sort((a,b) => b[1] - a[1])[0];
+    document.getElementById('topPoster').textContent = top ? top[0].slice(0,3) + '..' : '?';
+}
+
+// 渲染消息
+function renderMsgs() {
+    const list = document.getElementById('msgList');
+    const empty = document.getElementById('emptyMsg');
+    const msgs = loadMsgs();
+
+    if (msgs.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        updateStats();
+        return;
+    }
+    empty.style.display = 'none';
+
+    list.innerHTML = msgs.map((m, i) => {
+        const now = new Date(m.time);
+        const timeStr = now.toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const level = m.chaos || 1;
+        const name = m.name || '匿名野人';
+        const mood = m.mood || '😎';
+        return `<div class="msg-card chaos-level-${level}">
+            <div class="msg-header">
+                <div class="msg-author">
+                    <span>${name}</span>
+                    <span class="msg-badge">${mood}</span>
+                </div>
+                <div class="msg-time">${timeStr}</div>
+            </div>
+            <div class="msg-content">${escapeHtml(m.text)}</div>
+            ${m.tags && m.tags.length ? `<div class="msg-tags">${m.tags.map(t => `<span style="background:#f0f0f0;padding:1px 8px;border-radius:4px;font-size:11px;color:#888;">${t}</span>`).join('')}</div>` : ''}
+            <div class="msg-actions">
+                <span class="like-btn ${m.liked ? 'liked' : ''}" onclick="likeMsg(${i})">❤️ ${m.likes || 0}</span>
+                <span onclick="replyMsg('${escapeHtml(name)}')">💬 �?/span>
+                <span onclick="copyMsg(${i})">📋 复制</span>
+                <span onclick="deleteMsg(${i})" style="color:#e74c3c;">🗑�?/span>
+            </div>
+        </div>`;
+    }).join('');
+
+    updateStats();
+}
+
+// HTML 转义
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = t;
+    return d.innerHTML;
+}
+
+// 插入 emoji
+function insertEmoji(emoji) {
+    const ta = document.getElementById('chaosText');
+    ta.value += emoji;
+    ta.focus();
+    updateMadness();
+}
+
+// 疯狂度计�?function updateMadness() {
+    const text = document.getElementById('chaosText').value;
+    const len = text.length;
+    const bar = document.getElementById('madnessBar');
+    const label = document.getElementById('madnessLabel');
+    const pct = Math.min(100, (len / 50) * 100);
+    bar.style.width = pct + '%';
+
+    if (len < 5) { label.textContent = '冷静'; bar.style.background = 'linear-gradient(90deg, #2ecc71, var(--gold))'; }
+    else if (len < 15) { label.textContent = '微醺'; bar.style.background = 'linear-gradient(90deg, var(--gold), var(--pink))'; }
+    else if (len < 30) { label.textContent = '发疯�?; bar.style.background = 'linear-gradient(90deg, var(--pink), var(--purple))'; }
+    else { label.textContent = '💀 彻底疯狂'; bar.style.background = 'linear-gradient(90deg, var(--purple), #e74c3c)'; }
+}
+
+// 发疯
+function sendChaos() {
+    const text = document.getElementById('chaosText').value.trim();
+    const name = document.getElementById('chaosName').value.trim() || '匿名野人';
+    const mood = document.getElementById('chaosMood').value;
+    const msgEl = document.getElementById('sendMsg');
+
+    if (!text) {
+        msgEl.style.display = 'block'; msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 写点东西再发疯啊�?;
+        setTimeout(() => msgEl.style.display = 'none', 2000);
+        return;
+    }
+    if (text.length > 1000) {
+        msgEl.style.display = 'block'; msgEl.style.color = '#e74c3c';
+        msgEl.textContent = '⚠️ 太长了！疯也要适可而止�?;
+        setTimeout(() => msgEl.style.display = 'none', 2000);
+        return;
+    }
+
+    const chaos = Math.min(4, Math.max(1, Math.floor(text.length / 20) + 1));
+    const tags = [];
+    if (text.includes('瑜伽�?) || text.includes('yoga') || text.includes('align')) tags.push('🧘 瑜伽�?);
+    if (text.includes('性癖') || text.includes('审美')) tags.push('🔞 哲学');
+    if (text.includes('�?) || text.includes('�?) || text.includes('团购')) tags.push('💰 剁手');
+    if (text.includes('�?) || text.includes('深蹲')) tags.push('🕵�?透不�?);
+    if (chaos >= 3) tags.push('🤪 彻底疯狂');
+
+    const msgs = loadMsgs();
+    msgs.unshift({
+        name: name,
+        mood: mood,
+        text: text,
+        time: Date.now(),
+        likes: 0,
+        chaos: chaos,
+        tags: tags,
+        liked: false
+    });
+    saveMsgs(msgs);
+
+    document.getElementById('chaosText').value = '';
+    updateMadness();
+
+    msgEl.style.display = 'block'; msgEl.style.color = '#27ae60';
+    msgEl.textContent = '�?发疯成功�?;
+    setTimeout(() => msgEl.style.display = 'none', 1500);
+
+    renderMsgs();
+    if (chaos >= 4) triggerEmojiRain();
+}
+
+// 发随机疯
+function sendRandomChaos() {
+    const msg = RANDOM_MSGS[Math.floor(Math.random() * RANDOM_MSGS.length)];
+    document.getElementById('chaosText').value = msg;
+    updateMadness();
+    // 自动发�?    setTimeout(sendChaos, 300);
+}
+
+// 点赞
+function likeMsg(i) {
+    const msgs = loadMsgs();
+    if (msgs[i]) {
+        if (msgs[i].liked) {
+            msgs[i].likes = Math.max(0, (msgs[i].likes || 0) - 1);
+            msgs[i].liked = false;
+        } else {
+            msgs[i].likes = (msgs[i].likes || 0) + 1;
+            msgs[i].liked = true;
+        }
+        saveMsgs(msgs);
+        renderMsgs();
+    }
+}
+
+// 回复
+function replyMsg(name) {
+    document.getElementById('chaosText').value += `@${name} `;
+    document.getElementById('chaosText').focus();
+}
+
+// 复制
+function copyMsg(i) {
+    const msgs = loadMsgs();
+    if (msgs[i]) {
+        const text = `${msgs[i].name || '匿名野人'}�?{msgs[i].text}`;
+        navigator.clipboard.writeText(text).then(() => {
+            const msgEl = document.getElementById('sendMsg');
+            msgEl.style.display = 'block'; msgEl.style.color = '#27ae60';
+            msgEl.textContent = '�?已复制到剪贴板！';
+            setTimeout(() => msgEl.style.display = 'none', 1500);
+        });
+    }
+}
+
+// 删除
+function deleteMsg(i) {
+    const msgs = loadMsgs();
+    msgs.splice(i, 1);
+    saveMsgs(msgs);
+    renderMsgs();
+}
+
+// 清空全部
+function clearAll() {
+    if (!confirm('💣 真的要清空疯人院吗？？所有疯言疯语都会消失�?)) return;
+    if (!confirm('😈 你确定？？？群友的疯话也很珍贵的�?)) return;
+    saveMsgs([]);
+    renderMsgs();
+    document.getElementById('sendMsg').style.display = 'block';
+    document.getElementById('sendMsg').style.color = '#856404';
+    document.getElementById('sendMsg').textContent = '💀 疯人院已清空……重新开始吧';
+    setTimeout(() => document.getElementById('sendMsg').style.display = 'none', 2000);
+}
+
+// Emoji 暴雨 🎉
+function triggerEmojiRain() {
+    const container = document.getElementById('emojiRain');
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const el = document.createElement('div');
+            el.className = 'emoji-rain-item';
+            el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = '-5%';
+            el.style.animationDuration = (3 + Math.random() * 2) + 's';
+            el.style.fontSize = (18 + Math.random() * 24) + 'px';
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }, i * 80);
+    }
+}
+
+// Ctrl+Enter 发�?document.addEventListener('DOMContentLoaded', () => {
+    renderMsgs();
+    document.getElementById('chaosText').addEventListener('keydown', e => {
+        if (e.ctrlKey && e.key === 'Enter') sendChaos();
+    });
+    updateMadness();
+});
+
+// 回到顶部
+window.addEventListener('scroll',function(){var btn=document.getElementById('backToTop');if(btn)btn.style.display=window.scrollY>400?'flex':'none';});
+</script>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+</body>
+</html>
