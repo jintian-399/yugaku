@@ -106,12 +106,12 @@ a:hover { text-decoration: none; opacity: 0.8; }
     -webkit-text-fill-color: #8899aa;
     margin-left: 6px;
 }
-.nav { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.nav { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 .nav a {
-    color: #ccd6e0; font-size: 14px; font-weight: 500;
+    color: #ccd6e0; font-size: 13px; font-weight: 500;
     padding: 4px 0; transition: all 0.25s;
     border-bottom: 2px solid transparent;
-    position: relative;
+    position: relative; white-space: nowrap;
 }
 .nav a::after {
     content: ''; position: absolute; bottom: -2px; left: 0;
@@ -128,8 +128,14 @@ a:hover { text-decoration: none; opacity: 0.8; }
 
 @media (max-width: 768px) {
     .header .container { flex-direction: column; }
-    .nav { justify-content: center; gap: 10px; }
-    .nav a { font-size: 13px; }
+
+    .nav { justify-content: center; gap: 6px; }
+    .nav a { font-size: 12px; }
+}
+@media (max-width: 480px) {
+    .nav a { font-size: 11px; gap: 4px; }
+    .logo { font-size: 16px; }
+    .logo .subtitle { display: none; }
 }
 
 /* ===== 6. 页面标题区 Hero ===== */
@@ -414,7 +420,7 @@ tbody tr:hover { background: #faf8f5; }
 @media (max-width: 768px) {
     .page-hero h1 { font-size: 28px; }
     .header .container { flex-direction: column; }
-    .nav { justify-content: center; gap: 10px; }
+    .nav { justify-content: center; gap: 6px; }
     .grid { grid-template-columns: 1fr; }
     .footer-links { gap: 12px; }
 }
