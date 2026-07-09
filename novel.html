@@ -156,6 +156,68 @@
             .novel-hero h1 { font-size: 28px; }
             .char-grid { grid-template-columns: 1fr; }
         }
+    /* ===== 正文阅读 ===== */
+    .novel-text {
+        background: #fff; border-radius: var(--radius);
+        border: 1px solid var(--border); margin-bottom: 40px;
+        overflow: hidden;
+    }
+    .novel-text .ch-header {
+        background: linear-gradient(135deg, #faf8f5, #fef9ef);
+        padding: 32px 32px 24px; text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
+    .novel-text .ch-header .ch-badge {
+        display: inline-block; padding: 3px 14px; border-radius: 12px;
+        background: var(--pink); color: #fff; font-size: 12px; font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .novel-text .ch-header h2 {
+        font-size: 24px; font-weight: 800; color: var(--text);
+    }
+    .novel-text .ch-body {
+        padding: 32px; font-size: 16px; line-height: 2;
+        color: #333;
+    }
+    .novel-text .ch-body p {
+        margin-bottom: 16px; text-indent: 2em;
+    }
+    .novel-text .ch-body p:first-of-type {
+        text-indent: 0;
+    }
+    .mini-theater {
+        margin: 8px 32px 24px;
+        background: linear-gradient(135deg, #fef9ef, #fce4e8, #f0e6f6);
+        border-radius: 12px; padding: 16px 20px;
+        border: 2px solid #eee;
+    }
+    .mini-theater .mt-label {
+        font-size: 12px; font-weight: 700; color: var(--pink);
+        margin-bottom: 8px; letter-spacing: 1px;
+    }
+    .mini-theater .mt-body p {
+        font-size: 14px; margin-bottom: 4px; text-indent: 0;
+        line-height: 1.8;
+    }
+    .ch-nav {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 16px 32px 24px; border-top: 1px solid var(--border);
+        margin-top: 8px;
+    }
+    .ch-nav-disabled {
+        color: #ccc; font-size: 14px; cursor: not-allowed;
+    }
+    .ch-nav-link {
+        color: var(--pink); font-size: 14px; font-weight: 600;
+        cursor: pointer; transition: all 0.15s;
+    }
+    .ch-nav-link:hover { opacity: 0.7; }
+
+    @media (max-width: 600px) {
+        .novel-text .ch-body { padding: 20px; font-size: 15px; }
+        .mini-theater { margin: 8px 16px 16px; }
+        .ch-nav { padding: 12px 20px 20px; }
+    }
     </style>
 </head>
 <body>
@@ -485,11 +547,148 @@
 
     <!-- ===== 状态 ===== -->
     <div class="status-bar">
-        <div class="big">📝 连载中 · 敬请期待</div>
-        <div class="sub">大纲已定稿 · 正文即将开始更新 · 每周在发疯院预告新章节</div>
+        <div class="big">📝 连载中 · 第 1 章已更新</div>
+        <div class="sub">每周更新 2 章 · 在发疯院接收最新通知</div>
         <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-            <span style="display:inline-block;padding:6px 18px;border-radius:40px;background:var(--pink);color:#fff;font-size:13px;font-weight:600;cursor:pointer;" onclick="alert('📖 正文正在路上，先去发疯院逛逛吧！')">📖 阅读正文</span>
+            <a href="#ch1" style="display:inline-block;padding:6px 18px;border-radius:40px;background:var(--pink);color:#fff;font-size:13px;font-weight:600;text-decoration:none;">📖 阅读第 1 章</a>
             <a href="crazy.html" style="display:inline-block;padding:6px 18px;border-radius:40px;background:var(--gold);color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🤪 去发疯院催更</a>
+        </div>
+    </div>
+
+    <!-- ===== 正文 ===== -->
+    <div class="novel-text" id="ch1">
+        <div class="ch-header">
+            <span class="ch-badge">第 1 章</span>
+            <h2>面试的时候，面试官穿着瑜伽裤</h2>
+        </div>
+
+        <div class="ch-body">
+            <p>苏小棠在写字楼一楼大厅站了五分钟。</p>
+
+            <p>她抬头看着墙上的公司名录——十二楼，云雀科技有限公司。名字听起来像做软件的，但招聘软件上写的是「服装设计 · 瑜伽裤方向」。</p>
+
+            <p>她妈听说之后，在电话里沉默了三秒，然后说："瑜伽裤还需要设计？不是一条黑裤子就行了吗？"</p>
+
+            <p>苏小棠解释不了。她自己也解释不了。她只是需要在毕业两个月之后找到一份工作，而这家公司是唯一一个给她发面试邀请的。</p>
+
+            <p>电梯到了十二楼，门打开的瞬间，她闻到了一股淡淡的柠檬草香味。走廊尽头是一扇玻璃门，上面印着一只简笔画的云雀，嘴里叼着一片树叶——仔细看，那片树叶的形状像一条瑜伽裤。</p>
+
+            <p>"这个logo……"苏小棠盯着看了两秒，"好像有点东西。"</p>
+
+            <p>她推门进去。</p>
+
+            <p>前台的桌面摆着一排瑜伽裤模特腿——就是服装店里那种透明的塑料半身模型，齐刷刷地立在台面上，每条模型腿上穿着不同颜色的瑜伽裤。苏小棠数了数，七个颜色，赤橙黄绿青靛紫，排列得像彩虹。</p>
+
+            <p>她正掏出手机想偷拍一张，一个声音从旁边飘过来。</p>
+
+            <p>"你也觉得这个陈列很美吧？"</p>
+
+            <p>苏小棠吓了一跳，差点把手机扔出去。转头一看，一个穿着深灰色瑜伽裤的男人正站在她旁边，面带微笑。</p>
+
+            <p>男人看起来三十岁左右，穿着一件宽松的白T恤，下半身——苏小棠的职业素养让她下意识地扫了一眼——是一条剪裁非常考究的深灰色瑜伽裤。不是运动裤，是瑜伽裤。她能看出来。</p>
+
+            <p>最离谱的是，他穿得很好看。</p>
+
+            <p>"你来面试的吧？"男人说，"我是陆一鸣，产品部负责人。走吧，我带你去会议室。"</p>
+
+            <p>苏小棠跟在他后面，盯着他的背影，脑子里只有一个问题：面试官穿着瑜伽裤来面试我，这正常吗？</p>
+
+            <p>但她没有答案。因为她毕业两个月以来的面试经验告诉她——这种事情没有标准答案。</p>
+
+            <p>会议室不大，一张白色小圆桌，两把椅子。墙上贴满了瑜伽裤的版型图和各种面料的色卡，角落里还立着一个人体模特，穿着一条荧光绿的瑜伽裤。</p>
+
+            <p>苏小棠坐下，把作品集从包里拿出来，双手递过去："陆老师，这是我的作品集——"</p>
+
+            <p>陆一鸣接过作品集，看都没看就放在了一边。</p>
+
+            <p>"作品集我后面看。先说一个事儿。"他身体前倾，表情突然变得非常认真。"你对瑜伽裤……有感情吗？"</p>
+
+            <p>苏小棠："……啊？"</p>
+
+            <p>"不是让你穿——当然你穿不穿是你的自由——我是说，你对瑜伽裤这个品类，有感情吗？有理解吗？有天早上你站在衣柜前面，盯着那条叠好的瑜伽裤，觉得它在召唤你吗？"</p>
+
+            <p>苏小棠张了张嘴，什么都没说出来。</p>
+
+            <p>陆一鸣似乎也没期待她回答。他站起来，走到墙角的人体模特旁边，一把扯下那条荧光绿瑜伽裤——套在了自己腿上。</p>
+
+            <p>对。套上了。</p>
+
+            <p>面试进行到第三分钟，面试官当着她的面换了一条瑜伽裤。</p>
+
+            <p>"你看，"他用力扯了扯腰头的橡皮筋，"这个回弹性，这个贴合度——我们花了四个月调这个腰头的松紧参数。市面上大部分瑜伽裤的腰头设计思路是'勒住'，但我们的思路是'抱住'。这就是区别。"</p>
+
+            <p>他做了个深蹲。</p>
+
+            <p>"你看透不透？"</p>
+
+            <p>苏小棠的脸一下红了："陆老师，这个——"</p>
+
+            <p>"不是让你看我！"陆一鸣赶紧站起来，"看面料！看这个拉伸之后的颜色变化！懂吗？"</p>
+
+            <p>苏小棠这才明白过来。她深吸一口气，看过去。说实话，那条荧光绿在拉伸之后，颜色确实产生了一些微妙的变化——但她实在没办法在这种氛围下给出专业的评价。</p>
+
+            <p>"嗯……这个……颜色饱和度……"她艰难地憋出几个字。</p>
+
+            <p>陆一鸣眼睛一亮："你也能看出来对吧！饱和度在拉伸区域下降了大概百分之八，这是因为——"</p>
+
+            <p>接下来的四十分钟，苏小棠听了一场关于瑜伽裤面料的专题讲座。从纤维成分到织法结构，从旦数定义到透气性测试，从腰头设计到缝线工艺。陆一鸣全程亢奋，语速极快，中间换了三条不同面料的瑜伽裤做对比展示。</p>
+
+            <p>苏小棠一句话都插不上。她坐在椅子上，保持微笑，脑子里只有一个念头在循环播放：<em>这是什么公司这是什么公司这是什么公司</em>。</p>
+
+            <p>四十分钟后，陆一鸣终于停下来，喝了一口水。他看了一眼苏小棠的作品集——大概翻了十秒钟。</p>
+
+            <p>"可以。"他说，"你什么时候能入职？"</p>
+
+            <p>苏小棠："……啊？"</p>
+
+            <p>"我说，你什么时候能入职？"陆一鸣把作品集合上，"你的设计风格我们很喜欢——不对，这个不是重点。重点是你刚才没有被我吓跑。"</p>
+
+            <p>苏小棠愣住了。</p>
+
+            <p>"上一个面试的姑娘，在我讲到深蹲测试的时候，就拎包走了。"陆一鸣说着叹了口气，语气里带着一丝习以为常的无奈。"再上一个——是个男的，听完之后沉默了很久，问我能不能只做远程。上一个面试的男生是当场就跑了，那个都没轮到我展示深蹲。"</p>
+
+            <p>他又看向她，目光里竟透出几分真诚："所以你能听完，说明你心理素质过硬。做我们这行，心理素质比设计能力重要。"</p>
+
+            <p>苏小棠不知道自己是怎么走出那间会议室的。她只记得自己拿着那份写着「云雀科技有限公司 · 设计部 · 试用期三个月」的录用通知书，站在电梯里，对着反光的钢板看了很久自己的脸。</p>
+
+            <p>那张脸上的表情，用她后来跟闺蜜描述的话来说——"像是被人用瑜伽裤抡了一顿，但好像还挺开心的。"</p>
+
+            <p>走出写字楼的时候，她掏出手机，给大学室友江甜发了条消息。</p>
+
+            <p style="color: #666;">苏小棠：我好像找到工作了。</p>
+            <p style="color: #666;">苏小棠：但我觉得我老板不太正常。</p>
+            <p style="color: #666;">苏小棠：他面试的时候当着我的面换了三条瑜伽裤。</p>
+
+            <p>对面秒回。</p>
+
+            <p style="color: #666;">江甜：？？？？？？？？？</p>
+            <p style="color: #666;">江甜：什么公司？？我也要去？？？</p>
+
+            <p>苏小棠看着手机屏幕，笑了出来。</p>
+
+            <p>她收起手机，抬头看了一眼十二楼的窗户。阳光照在玻璃上，反射出一片温暖的光。</p>
+
+            <p>至少——她想——至少比在家待着有意思多了。</p>
+        </div>
+
+        <!-- ===== 今日发疯小剧场 ===== -->
+        <div class="mini-theater">
+            <div class="mt-label">🎭 今日发疯 · 小剧场</div>
+            <div class="mt-body">
+                <p><strong>陆一鸣</strong>：你说什么样的瑜伽裤才是好瑜伽裤？</p>
+                <p><strong>苏小棠</strong>：……穿着舒服的？</p>
+                <p><strong>陆一鸣</strong>：（沉默）</p>
+                <p><strong>陆一鸣</strong>：你这话让我很难接。我准备了四千字的答案，你说四个字就概括了。</p>
+                <p><strong>苏小棠</strong>：所以我面试过了？</p>
+                <p><strong>陆一鸣</strong>：过了。因为你击穿了我的知识体系。</p>
+            </div>
+        </div>
+
+        <!-- ===== 章末导航 ===== -->
+        <div class="ch-nav">
+            <span class="ch-nav-disabled">← 上一章</span>
+            <a href="#ch1" style="color:var(--pink);font-weight:600;text-decoration:none;">↑ 回顶部</a>
+            <span class="ch-nav-link" onclick="alert('📖 第 2 章正在路上！先去发疯院逛逛吧~')">下一章 →</span>
         </div>
     </div>
 
