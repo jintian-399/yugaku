@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 云雀与瑜伽裤 · 瑜伽裤百科</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+    <style>
+        /* ===== 小说专属样式 ===== */
+        .novel-hero {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e, #0f3460);
+            color: #fff; padding: 72px 0 48px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .novel-hero::before {
+            content: '🧘‍♀️📖🧘‍♀️📖🧘‍♀️📖🧘‍♀️📖🧘‍♀️📖';
+            position: absolute; top: -10px; left: 0; right: 0;
+            font-size: 24px; opacity: 0.06; white-space: nowrap;
+            pointer-events: none;
+        }
+        .novel-hero h1 { font-size: 42px; font-weight: 900; }
+        .novel-hero h1 em {
+            background: linear-gradient(90deg, var(--pink), var(--gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-style: normal;
+        }
+        .novel-hero .sub { color: #99aabb; font-size: 16px; margin-top: 8px; }
+        .novel-hero .badges {
+            display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap;
+        }
+        .novel-hero .badges span {
+            padding: 4px 16px; border-radius: 40px; font-size: 12px; font-weight: 600;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .novel-body { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+        /* ===== 信息卡片 ===== */
+        .info-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px; margin-bottom: 40px;
+        }
+        .info-card {
+            background: #fff; border-radius: 12px; padding: 16px;
+            border: 1px solid var(--border); text-align: center;
+        }
+        .info-card .icon { font-size: 28px; margin-bottom: 6px; }
+        .info-card .val { font-size: 16px; font-weight: 700; }
+        .info-card .lbl { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+        /* ===== 梗概 ===== */
+        .synopsis {
+            background: linear-gradient(135deg, #faf8f5, #fef9ef);
+            border-radius: var(--radius); padding: 28px;
+            border-left: 4px solid var(--gold); margin-bottom: 40px;
+            font-size: 15px; line-height: 1.9;
+        }
+
+        /* ===== 人物 ===== */
+        .char-section { margin-bottom: 40px; }
+        .char-section h2, .vol-section h2 {
+            font-size: 24px; font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .char-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .char-card {
+            background: #fff; border-radius: var(--radius); padding: 20px;
+            border: 1px solid var(--border); transition: all 0.25s;
+        }
+        .char-card:hover { border-color: #ddd; box-shadow: var(--shadow); }
+        .char-card .avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 12px;
+        }
+        .char-card .name {
+            font-size: 18px; font-weight: 700; margin-bottom: 2px;
+        }
+        .char-card .role {
+            font-size: 12px; color: var(--text-light); margin-bottom: 8px;
+        }
+        .char-card .desc {
+            font-size: 14px; color: #555; line-height: 1.7;
+        }
+        .char-card .tag {
+            display: inline-block; padding: 2px 10px; border-radius: 6px;
+            font-size: 11px; font-weight: 600; margin-top: 8px;
+        }
+
+        /* ===== 分卷 ===== */
+        .vol-section { margin-bottom: 40px; }
+        .vol-card {
+            background: #fff; border-radius: var(--radius);
+            border: 1px solid var(--border); margin-bottom: 16px;
+            overflow: hidden; transition: all 0.25s;
+        }
+        .vol-card:hover { border-color: #ddd; box-shadow: var(--shadow); }
+        .vol-card .vol-header {
+            padding: 16px 20px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
+        }
+        .vol-card .vol-header h3 { font-size: 17px; font-weight: 700; }
+        .vol-card .vol-header .vol-count { font-size: 12px; color: var(--text-light); }
+        .vol-card .vol-header .arrow {
+            transition: transform 0.2s; font-size: 14px; color: #bbb;
+        }
+        .vol-card.open .vol-header .arrow { transform: rotate(180deg); }
+        .vol-card .vol-body {
+            padding: 0 20px; max-height: 0; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .vol-card.open .vol-body {
+            padding: 0 20px 16px; max-height: 2000px;
+        }
+        .vol-card .chapter {
+            padding: 10px 0; border-top: 1px solid var(--border);
+            display: flex; gap: 12px; align-items: flex-start;
+        }
+        .vol-card .chapter .ch-num {
+            font-size: 12px; font-weight: 700; color: var(--pink);
+            white-space: nowrap; min-width: 60px; padding-top: 2px;
+        }
+        .vol-card .chapter .ch-info { flex: 1; }
+        .vol-card .chapter .ch-title { font-size: 15px; font-weight: 600; }
+        .vol-card .chapter .ch-desc { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+
+        /* ===== 看点 ===== */
+        .highlights {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px; margin-bottom: 40px;
+        }
+        .highlight-item {
+            background: #fff; border-radius: 12px; padding: 20px;
+            border: 1px solid var(--border); text-align: center;
+        }
+        .highlight-item .h-icon { font-size: 32px; margin-bottom: 8px; }
+        .highlight-item h4 { font-size: 15px; margin-bottom: 4px; }
+        .highlight-item p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+
+        /* ===== 状态 ===== */
+        .status-bar {
+            text-align: center; padding: 24px;
+            background: linear-gradient(135deg, #f0e6f6, #fef9ef);
+            border-radius: var(--radius); margin-bottom: 32px;
+        }
+        .status-bar .big { font-size: 18px; font-weight: 700; }
+        .status-bar .sub { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 600px) {
+            .novel-hero h1 { font-size: 28px; }
+            .char-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">🧝‍♀️ 瑜伽裤百科</a>
+            <span class="subtitle">· 云雀与瑜伽裤</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">首页</a>
+            <a href="brands.html">品牌</a>
+            <a href="fabric-lab.html">面料实验室</a>
+            <a href="guide.html">选购指南</a>
+            <a href="care.html">养护秘籍</a>
+            <a href="quotes.html">📋 语录</a>
+            <a href="fun.html">🎳 整活</a>
+            <a href="crazy.html">🤪 发疯院</a>
+            <a href="novel.html" class="active">📖 小说</a>
+        </nav>
+    </div>
+</header>
+
+<section class="novel-hero">
+    <div class="container">
+        <h1>📖 <em>云雀与瑜伽裤</em></h1>
+        <div class="sub">一部关于瑜伽裤的都市轻喜剧 · 全员疯批 · 含糖量适中</div>
+        <div class="badges">
+            <span>🏷️ 都市轻小说</span>
+            <span>📝 中篇连载</span>
+            <span>🎭 喜剧 · 日常</span>
+            <span>💕 慢热</span>
+        </div>
+    </div>
+</section>
+
+<div class="novel-body">
+
+    <!-- ===== 基本信息 ===== -->
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">📏</div>
+            <div class="val">15-20 章</div>
+            <div class="lbl">预计篇幅</div>
+        </div>
+        <div class="info-card">
+            <div class="icon">✍️</div>
+            <div class="val">连载中</div>
+            <div class="lbl">更新状态</div>
+        </div>
+        <div class="info-card">
+            <div class="icon">📅</div>
+            <div class="val">每周 2 更</div>
+            <div class="lbl">更新频率</div>
+        </div>
+        <div class="info-card">
+            <div class="icon">🎨</div>
+            <div class="val">轻松 · 搞笑</div>
+            <div class="lbl">阅读基调</div>
+        </div>
+    </div>
+
+    <!-- ===== 梗概 ===== -->
+    <div class="synopsis">
+        <strong>📖 故事梗概</strong><br><br>
+        刚刚毕业的设计师 <strong>苏小棠</strong>，误打误撞进了一家名为"云雀"的瑜伽裤品牌公司。<br>
+        入职第一天她就发现——这家公司从上到下没一个正常人。<br><br>
+        老板沉迷研究"透不透"的哲学命题，同事们在群里 24 小时发疯，
+        隔壁工位的姐姐上班织毛衣，而技术部那个冷面帅哥……居然穿着自家品牌的瑜伽裤来上班。<br><br>
+        当苏小棠以为这就是全部的时候，她发现自己家楼下新搬来的瑜伽教练，
+        就是公司群里那个每天发表情包的匿名狂魔。<br><br>
+        这是一个关于瑜伽裤、离谱同事、以及一点点心动的故事。
+    </div>
+
+    <!-- ===== 人物 ===== -->
+    <div class="char-section">
+        <h2>👥 人物介绍</h2>
+        <div class="char-grid">
+            <div class="char-card">
+                <div class="avatar" style="background:#fce4e8;">🌸</div>
+                <div class="name">苏小棠</div>
+                <div class="role">女主 · 22岁 · 平面设计师</div>
+                <div class="desc">表面正常、内心戏多的应届毕业生。入职云雀后逐渐被同化，从一开始的震惊脸变成了"算了就这样吧"。</div>
+                <span class="tag" style="background:#fce4e8;color:#c23152;">🍚 干饭人</span>
+            </div>
+            <div class="char-card">
+                <div class="avatar" style="background:#e8f0fe;">🧊</div>
+                <div class="name">顾云舟</div>
+                <div class="role">男主 · 25岁 · 技术部主管</div>
+                <div class="desc">表面高冷的技术宅，实际上对瑜伽裤面料有深入研究。日常面无表情但偶尔语出惊人，穿自家品牌上班是真觉得舒服。</div>
+                <span class="tag" style="background:#e8f0fe;color:#1a73e8;">🧘 真·瑜伽裤信徒</span>
+            </div>
+            <div class="char-card">
+                <div class="avatar" style="background:#fef3e2;">🔥</div>
+                <div class="name">江甜</div>
+                <div class="role">24岁 · 市场部 · 社交恐怖分子</div>
+                <div class="desc">公司群里的活跃气氛担当，苏小棠的"职场领路人"。能在 5 分钟内把一个正经群聊变成发疯现场。</div>
+                <span class="tag" style="background:#fef3e2;color:#e67e22;">💬 群聊发动机</span>
+            </div>
+            <div class="char-card">
+                <div class="avatar" style="background:#f0e6f6;">🤔</div>
+                <div class="name">陆一鸣</div>
+                <div class="role">28岁 · 产品经理</div>
+                <div class="desc">对"透不透"有着近似偏执的追求。每天都在研究面料成分表，办公室里贴满了透度测试照片。</div>
+                <span class="tag" style="background:#f0e6f6;color:#7b1fa2;">🔬 透不透学家</span>
+            </div>
+            <div class="char-card">
+                <div class="avatar" style="background:#e8f8ef;">🧶</div>
+                <div class="name">方姨</div>
+                <div class="role">45岁 · 行政主管</div>
+                <div class="desc">表面是温和的大姐，端茶倒水嘘寒问暖。实际上她是公司群里最会发疯的那个，表情包库存全公司第一。</div>
+                <span class="tag" style="background:#e8f8ef;color:#27ae60;">😂 隐藏疯批</span>
+            </div>
+            <div class="char-card">
+                <div class="avatar" style="background:#fef9ef;">☀️</div>
+                <div class="name">周教练</div>
+                <div class="role">26岁 · 瑜伽教练 · 苏小棠邻居</div>
+                <div class="desc">阳光开朗的大男孩，线下是温柔耐心瑜伽教练，线上是群里那个发疯表情包狂魔。两副面孔切换自如。</div>
+                <span class="tag" style="background:#fef9ef;color:#d4891a;">👻 双面人</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 分卷大纲（可折叠） ===== -->
+    <div class="vol-section">
+        <h2>📑 分卷大纲</h2>
+
+        <div class="vol-card open">
+            <div class="vol-header" onclick="toggleVol(this)">
+                <div>
+                    <h3>📦 第一卷：入职</h3>
+                    <div class="vol-count">第 1 ~ 5 章 · 苏小棠的新世界</div>
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="vol-body">
+                <div class="chapter">
+                    <span class="ch-num">第 1 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">面试的时候，面试官穿着瑜伽裤</div>
+                        <div class="ch-desc">苏小棠的面试经历和她想象的完全不一样。老板陆一鸣全程亢奋地讲了四十分钟"透不透"的理论，她一句没听懂，但还是拿到了offer。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 2 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">入职第一天的离谱晨会</div>
+                        <div class="ch-desc">晨会主题是"你最喜欢的瑜伽裤颜色"，有人认真回答，有人说"裸色"，会议室炸了。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 3 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">那个穿瑜伽裤上班的技术部主管</div>
+                        <div class="ch-desc">苏小棠第一次见到顾云舟的时候，他穿着自家品牌的瑜伽裤，面无表情地走过去。她问江甜："他一直这样吗？"江甜："对，而且他穿的不是裤子，是信仰。"</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 4 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">我被拉进了发疯群</div>
+                        <div class="ch-desc">下班前一分钟，江甜把苏小棠拉进了一个叫"云雀·不发疯就倒闭"的群。群里 200 人，消息 999+。苏小棠刷了半小时，决定先不说话了。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 5 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">团建去了瑜伽裤工厂</div>
+                        <div class="ch-desc">入职第一周团建，地点是合作的瑜伽裤工厂。陆一鸣在生产线上热泪盈眶，苏小棠第一次知道一条瑜伽裤是怎么做出来的。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vol-card">
+            <div class="vol-header" onclick="toggleVol(this)">
+                <div>
+                    <h3>🌈 第二卷：日常</h3>
+                    <div class="vol-count">第 6 ~ 11 章 · 逐渐被同化</div>
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="vol-body">
+                <div class="chapter">
+                    <span class="ch-num">第 6 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">关于"透不透"的世纪辩论</div>
+                        <div class="ch-desc">公司内部群爆发了一场关于"深蹲时瑜伽裤到底透不透"的世纪辩论，持续了三个小时，最后老板出面总结："这是一个哲学问题。"</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 7 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">快闪店奇遇记</div>
+                        <div class="ch-desc">公司在一家商场办快闪店，苏小棠被拉去做苦力。遇到了各种离谱顾客——有人试了八条不买，有人进来就问"你们老板是不是疯了"。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 8 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">隔壁工位的姐姐在织毛衣</div>
+                        <div class="ch-desc">方姨上班织毛衣这件事被苏小棠发现了。更离谱的是，方姨理直气壮："我工作效率是你们的三倍，织毛衣怎么了？"</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 9 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">新邻居是瑜伽教练</div>
+                        <div class="ch-desc">苏小棠家楼下搬来了新邻居——一个阳光帅气的瑜伽教练。她不知道的是，这位教练就是群里那个每天发疯的匿名狂魔。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 10 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">面料实验室奇妙夜</div>
+                        <div class="ch-desc">公司接了个大订单，全公司加班。苏小棠和顾云舟在面料实验室独处了一夜，发现这个男人谈起面料来居然有点帅。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 11 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">双十一的疯狂</div>
+                        <div class="ch-desc">双十一，全公司通宵。江甜带了一箱红牛，方姨织完了第三条围巾，陆一鸣盯着销售数据热泪盈眶。苏小棠在工位上睡着了，醒来身上披着一件外套——和一条瑜伽裤。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vol-card">
+            <div class="vol-header" onclick="toggleVol(this)">
+                <div>
+                    <h3>🌟 第三卷：升华</h3>
+                    <div class="vol-count">第 12 ~ 18 章 · 当疯批成为日常</div>
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="vol-body">
+                <div class="chapter">
+                    <span class="ch-num">第 12 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">新来的实习生比我还疯</div>
+                        <div class="ch-desc">公司来了个新实习生，入职第一天就接管了发疯群的活跃度。苏小棠看着"00后整顿职场"的新闻，再看看实习生——整顿的是发疯赛道。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 13 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">云雀的第一次品牌翻车</div>
+                        <div class="ch-desc">新款瑜伽裤被吐槽"穿上像绑了保鲜膜"，全网群嘲。全公司紧急开会，苏小棠第一次见到大家正经起来的样子。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 14 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">危机公关（又名：化整活为力量）</div>
+                        <div class="ch-desc">苏小棠提议用整活的方式回应吐槽。于是云雀出了一条官方视频《关于保鲜膜瑜伽裤的十种用法》，居然火了。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 15 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">群友见面会</div>
+                        <div class="ch-desc">群里组织了一场线下见面会。苏小棠发现——那个每天发疯表情包的"匿名用户67"，居然就是住她楼下的周教练。世界真小。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 16 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">原来顾云舟他……</div>
+                        <div class="ch-desc">苏小棠无意中发现，顾云舟就是当年那个在知乎写"如何挑选瑜伽裤"万字长文的匿名答主。那篇文章她入职前居然读过。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 17 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">瑜伽裤时装秀（上）</div>
+                        <div class="ch-desc">云雀办了一场瑜伽裤主题时装秀。模特们穿着瑜伽裤走秀，全公司上阵，陆一鸣在后台哭了三次。</div>
+                    </div>
+                </div>
+                <div class="chapter">
+                    <span class="ch-num">第 18 章</span>
+                    <div class="ch-info">
+                        <div class="ch-title">瑜伽裤时装秀（下）· 尾声</div>
+                        <div class="ch-desc">时装秀圆满成功。庆功宴上，苏小棠看着这群疯批同事——虽然每个人都离谱得要命，但这是她见过最真实的团队。顾云舟走过来："你穿瑜伽裤很好看。"苏小棠："……你什么时候看见的？"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== 核心看点 ===== -->
+    <h2 style="font-size:24px;font-weight:700;margin-bottom:16px;">🎯 核心看点</h2>
+    <div class="highlights">
+        <div class="highlight-item">
+            <div class="h-icon">🏢</div>
+            <h4>职场轻喜剧</h4>
+            <p>离谱但真实的创业公司日常，每一个群友都能找到自己的影子</p>
+        </div>
+        <div class="highlight-item">
+            <div class="h-icon">🧘</div>
+            <h4>瑜伽裤文化</h4>
+            <p>面料科普 × 圈内梗 ×"透不透"哲学，边笑边长知识</p>
+        </div>
+        <div class="highlight-item">
+            <div class="h-icon">👥</div>
+            <h4>群像角色</h4>
+            <p>每个人都表面正常、内心疯批，总有一个你喜欢的</p>
+        </div>
+        <div class="highlight-item">
+            <div class="h-icon">💕</div>
+            <h4>慢热感情线</h4>
+            <p>从互怼到真香，没有工业糖精，只有面料实验室里的不经意心动</p>
+        </div>
+        <div class="highlight-item">
+            <div class="h-icon">🎭</div>
+            <h4>每章小剧场</h4>
+            <p>每章末尾附带"今日发疯"迷你剧场，正片之外的快乐</p>
+        </div>
+        <div class="highlight-item">
+            <div class="h-icon">📡</div>
+            <h4>与网站联动</h4>
+            <p>小说角色会出现在发疯院评论区，打破次元壁</p>
+        </div>
+    </div>
+
+    <!-- ===== 状态 ===== -->
+    <div class="status-bar">
+        <div class="big">📝 连载中 · 敬请期待</div>
+        <div class="sub">大纲已定稿 · 正文即将开始更新 · 每周在发疯院预告新章节</div>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <span style="display:inline-block;padding:6px 18px;border-radius:40px;background:var(--pink);color:#fff;font-size:13px;font-weight:600;cursor:pointer;" onclick="alert('📖 正文正在路上，先去发疯院逛逛吧！')">📖 阅读正文</span>
+            <a href="crazy.html" style="display:inline-block;padding:6px 18px;border-radius:40px;background:var(--gold);color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🤪 去发疯院催更</a>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>📖 云雀与瑜伽裤 · 一部关于瑜伽裤的都市轻喜剧</p>
+        <div class="disclaimer">
+            本故事纯属虚构 · 如有雷同，说明你也加了这个群<br>
+            角色偶尔会出现在发疯院评论区，是正常的，不要慌
+        </div>
+    </div>
+</footer>
+
+<script>
+// 折叠分卷
+function toggleVol(el) {
+    const card = el.closest('.vol-card');
+    if (card) card.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
